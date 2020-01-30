@@ -84,14 +84,14 @@ var objects = createObjects();
 var mapDelet = document.querySelector('.map--faded');
 mapDelet.classList.remove('.map--faded');
 
-var pins = document.querySelectorAll('#pins').content.querySelector('.map__pin');
+var pinsTemplate = document.querySelectorAll('#pins').content.querySelector('.map__pin');
 
-var renderLocation = function () {
+var renderLocation = function (pins) {
   var objectElement = pins.cloneNode(true);
-  pins.style.top = objects.location.y + ;
-  pins.style.left = objects.location.x;
-  pins.style.src = objeavatar"{{author.avatar}}"
-  Альтернативный текст: alt="{{заголовок объявления}}"
+  pins.style.top = objects.location.y + 'py';
+  pins.style.left = objects.location.x + 'px';
+  pins.style.src = objects.avatar;
+  pins.style.alt = objects.title;
   return objectElement;
 };
 
@@ -100,4 +100,4 @@ for (var i = 0; i < objects.length; i++) {
   fragment.appendChild(renderLocation(objects[i]));
 }
 
-pins.appendChild(fragment);
+pinsTemplate.appendChild(fragment);
