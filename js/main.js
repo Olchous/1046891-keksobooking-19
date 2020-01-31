@@ -7,6 +7,7 @@ var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o
 var checkinArr = ['12:00', '13:00', '14:00'];
 var checkoutArr = ['12:00', '13:00', '14:00'];
 var text = 'text';
+var blockWidth = document.querySelector('.map__pins');
 
 // функция создания рандомной длины
 function getRandomInt(min, max) {
@@ -20,10 +21,12 @@ function randomElement(items) {
 
 // функция создания массива рандомной длины
 function getRandomArr(array) {
+  var copyArray = array.slice();
   var randomLength = getRandomInt(0, array.length - 1);
   var newArr = [];
   for (var i = 0; i < randomLength; i++) {
-    newArr.push(array[i]);
+    newArr.push(array[randomLength]);
+    copyArray(randomLength, 1);
   }
   return newArr;
 }
@@ -53,7 +56,7 @@ function createPin() {
       photos: getRandomArr(photosArr)
     },
     location: {
-      x: getRandomInt(0, 100),
+      x: getRandomInt(0, blockWidth),
       y: getRandomInt(130, 630)
     }
   };
@@ -81,7 +84,7 @@ var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__p
 var renderLocation = function (pin) {
   var pinElement = pinsTemplate.cloneNode(true);
   var img = pinElement.querySelector('img');
-  pinElement.style.top = pin.location.y + 'py';
+  pinElement.style.top = pin.location.y + 'px';
   pinElement.style.left = pin.location.x + 'px';
   img.setAttribute('avatar', pin.avatar);
   img.setAttribute('title', pin.title);
