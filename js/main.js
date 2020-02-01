@@ -23,11 +23,12 @@ function randomElement(items) {
 // функция создания массива рандомной длины с рандомными элементами внутри
 function getRandomArr(array) {
   var copyArray = array.slice();
-  var randomLength = getRandomInt(0, array.length - 1);
+  var randomLength = getRandomInt(1, array.length - 1);
   var newArr = [];
   for (var i = 0; i < randomLength; i++) {
-    var randomIndex = getRandomInt(0, randomLength);
+    var randomIndex = getRandomInt(0, copyArray.length - 1);
     newArr.push(copyArray[randomIndex]);
+    copyArray.splice(randomIndex, 1);
   }
   return newArr;
 }
