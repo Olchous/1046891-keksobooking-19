@@ -20,13 +20,14 @@ function randomElement(items) {
   return items[getRandomInt(0, items.length - 1)];
 }
 
-// функция создания массива рандомной длины
+// функция создания массива рандомной длины с рандомными элементами внутри
 function getRandomArr(array) {
   var copyArray = array.slice();
   var randomLength = getRandomInt(0, array.length - 1);
   var newArr = [];
   for (var i = 0; i < randomLength; i++) {
-    newArr.push(copyArray[randomLength]);
+    var randomIndex = getRandomInt(0, randomLength);
+    newArr.push(copyArray[randomIndex]);
   }
   return newArr;
 }
