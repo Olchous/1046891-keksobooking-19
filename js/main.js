@@ -7,7 +7,8 @@ var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o
 var checkinArr = ['12:00', '13:00', '14:00'];
 var checkoutArr = ['12:00', '13:00', '14:00'];
 var text = 'text';
-var blockWidth = document.querySelector('.map__pins');
+var blockWidth = document.querySelector('.map__pins').offsetWidth;
+// document.write(blockWidth.offsetWidth);
 
 // функция создания рандомной длины
 function getRandomInt(min, max) {
@@ -25,8 +26,7 @@ function getRandomArr(array) {
   var randomLength = getRandomInt(0, array.length - 1);
   var newArr = [];
   for (var i = 0; i < randomLength; i++) {
-    newArr.push(array[randomLength]);
-    copyArray(randomLength, 1);
+    newArr.push(copyArray[randomLength]);
   }
   return newArr;
 }
