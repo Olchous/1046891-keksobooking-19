@@ -101,5 +101,66 @@ for (var i = 0; i < objects.length; i++) {
 
 // создание переменной, дублирующей содержание класса .map__pin
 var mapPins = document.querySelector('.map__pins');
+
 // присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
 mapPins.appendChild(fragment);
+
+
+// домашка часть 2
+// запись полученного нового шаблона в фрагмент
+// var fragmentTwo = document.createDocumentFragment();
+// for (var i = 0; i < mapPins.length; i++) {
+//   fragmentTwo.appendChild(renderLocation(mapPins[i]));
+// }
+
+// поиск в разметке тега card
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
+// функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
+// функция возвращает отформатированный в соответствии с нашими тредованиямии template
+var renderCard = function (offer) {
+  var cardElement = cardTemplate.cloneNode(true);
+  // var content = cardElement.querySelector('article');
+  cardTemplate.querySelector('.popup__title').textContent = offer.title;
+  cardTemplate.querySelector('.popup__text--address').textContent = offer.address;
+  cardTemplate.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
+  cardTemplate.querySelector('.popup__type').textContent = function () {
+    if (offer.type[i] === 'flat') {
+      return 'Квартира';
+    } if (offer.type[i] === 'bungalo') {
+      return 'Бунгало';
+    } if (offer.type[i] === 'house') {
+      return 'Дом';
+    } else {
+      return 'Дворец';
+    }
+  };
+  cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для' + offer.guests + ' гостей';
+  cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
+  // не понимаю как заменить содержимое features
+  // cardTemplate.querySelector('.popup__features') = ???;
+  cardTemplate.querySelector('.popup__description').textContent = offer.description;
+  // с массивом фото тоже не ясно
+  // cardTemplate.querySelector('.popup__photos') = ???;
+  // как менять аватар тоже не ясно
+  // cardTemplate.querySelector('.popup__avatar') = author.avatar;
+  // в каком месте сделать проверку на заполненность?
+  // делать ее через true?
+  // for examples,
+  // if (offer.title = false) {
+  //  ('.popup__title').textContent = .hidden
+  // }
+  return cardElement;
+};
+
+// запись полученного нового шаблона в фрагмент
+var fragmentTwo = document.createDocumentFragment();
+for (var i = 0; i < objects.length; i++) {
+  fragmentTwo.appendChild(renderCard(objects[i]));
+}
+
+// создание переменной, дублирующей содержание класса .map__pin
+var mapCards = document.querySelector('.map__filters-container');
+
+// присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
+mapCards.appendChild(fragment);
