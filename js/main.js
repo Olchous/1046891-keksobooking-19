@@ -1,4 +1,5 @@
 'use strict';
+
 // переменные, используемые в коде
 var NUMBER_OBJECTS = 8;
 var typeArr = ['palace', 'flat', 'house', 'bungalo'];
@@ -111,6 +112,19 @@ mapPins.appendChild(fragment);
 // поиск в разметке тега card
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+// функция присвоения значения type
+function russianType(type) {
+  if (type === 'flat') {
+    return 'Квартира';
+  } else if (type === 'bungalo') {
+    return 'Бунгало';
+  } else if (type === 'house') {
+    return 'Дом';
+  } else {
+    return 'Дворец';
+  }
+}
+
 // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
 // функция возвращает отформатированный в соответствии с нашими тредованиямии template
 var renderCard = function (offer) {
@@ -119,17 +133,7 @@ var renderCard = function (offer) {
   cardTemplate.querySelector('.popup__title').textContent = offer.title;
   cardTemplate.querySelector('.popup__text--address').textContent = offer.address;
   cardTemplate.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-  cardTemplate.querySelector('.popup__type').textContent = function () {
-    if (offer.type[i] === 'flat') {
-      return 'Квартира';
-    } if (offer.type[i] === 'bungalo') {
-      return 'Бунгало';
-    } if (offer.type[i] === 'house') {
-      return 'Дом';
-    } else {
-      return 'Дворец';
-    }
-  };
+  cardTemplate.querySelector('.popup__type').textContent = russianType(offer.type);
   cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для' + offer.guests + ' гостей';
   cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
   // не понимаю как заменить содержимое features. Сначала надо удалить те значения, что есть...
@@ -161,4 +165,3 @@ var mapCards = document.querySelector('.map__filters-container');
 
 // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
 mapCards.appendChild(fragment2);
-
