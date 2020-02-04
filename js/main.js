@@ -81,7 +81,7 @@ document.querySelector('.map--faded').classList.remove('.map--faded');
 // поиск в разметке тега pin с классом .map__pin
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-// функция передачи информации из созданного objects (строка 71) в скопированный узел template DOM > #pin > .map__pin
+// функция передачи информации из созданного objects в скопированный узел template DOM > #pin > .map__pin
 // функция возвращает отформатированный в соответствии с нашими тредованиямии template
 var renderLocation = function (pin) {
   var pinElement = pinsTemplate.cloneNode(true);
@@ -102,16 +102,11 @@ for (var i = 0; i < objects.length; i++) {
 // создание переменной, дублирующей содержание класса .map__pin
 var mapPins = document.querySelector('.map__pins');
 
-// присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
+// присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили и данные
 mapPins.appendChild(fragment);
 
 
 // домашка часть 2
-// запись полученного нового шаблона в фрагмент
-// var fragmentTwo = document.createDocumentFragment();
-// for (var i = 0; i < mapPins.length; i++) {
-//   fragmentTwo.appendChild(renderLocation(mapPins[i]));
-// }
 
 // поиск в разметке тега card
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
@@ -120,7 +115,7 @@ var cardTemplate = document.querySelector('#card').content.querySelector('.map__
 // функция возвращает отформатированный в соответствии с нашими тредованиямии template
 var renderCard = function (offer) {
   var cardElement = cardTemplate.cloneNode(true);
-  // var content = cardElement.querySelector('article');
+  var content = cardElement.querySelector('article');
   cardTemplate.querySelector('.popup__title').textContent = offer.title;
   cardTemplate.querySelector('.popup__text--address').textContent = offer.address;
   cardTemplate.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
@@ -137,30 +132,33 @@ var renderCard = function (offer) {
   };
   cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для' + offer.guests + ' гостей';
   cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
-  // не понимаю как заменить содержимое features
-  // cardTemplate.querySelector('.popup__features') = ???;
+  // не понимаю как заменить содержимое features. Сначала надо удалить те значения, что есть...
+  cardTemplate.querySelector('.popup__features').textContent = offer.features;
   cardTemplate.querySelector('.popup__description').textContent = offer.description;
-  // с массивом фото тоже не ясно
-  // cardTemplate.querySelector('.popup__photos') = ???;
+  // с массивом фото не ясно...
+  cardTemplate.querySelector('.popup__photos').appendChild(offer.photos);
+  content.setAttribute('photos', offer.photos);
   // как менять аватар тоже не ясно
   // cardTemplate.querySelector('.popup__avatar') = author.avatar;
-  // в каком месте сделать проверку на заполненность?
-  // делать ее через true?
-  // for examples,
-  // if (offer.title = false) {
-  //  ('.popup__title').textContent = .hidden
-  // }
+
   return cardElement;
 };
 
+// в каком месте сделать проверку на заполненность
+// делать ее через true?
+// if (cardElement[i] = false) {
+//  var test = query.Selector('.popup__title').classList.add('hidden');
+// }
+
 // запись полученного нового шаблона в фрагмент
-var fragmentTwo = document.createDocumentFragment();
-for (var i = 0; i < objects.length; i++) {
-  fragmentTwo.appendChild(renderCard(objects[i]));
+var fragment2 = document.createDocumentFragment();
+for (var j = 0; j < objects.length; j++) {
+  fragment2.appendChild(renderCard(objects[j]));
 }
 
 // создание переменной, дублирующей содержание класса .map__pin
 var mapCards = document.querySelector('.map__filters-container');
 
-// присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
-mapCards.appendChild(fragment);
+// присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
+mapCards.appendChild(fragment2);
+
