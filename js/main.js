@@ -7,7 +7,8 @@ var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condi
 var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var checkinArr = ['12:00', '13:00', '14:00'];
 var checkoutArr = ['12:00', '13:00', '14:00'];
-var text = 'text';
+var text = 'Заголовок';
+var textDescription = 'Далее следует текст описания';
 var blockWidth = document.querySelector('.map__pins').offsetWidth;
 // document.write(blockWidth.offsetWidth);
 
@@ -55,7 +56,7 @@ function createPin() {
       checkin: randomElement(checkinArr),
       checkout: randomElement(checkoutArr),
       features: getRandomArr(featuresArr),
-      description: text,
+      description: textDescription,
       photos: getRandomArr(photosArr)
     },
     location: {
@@ -113,7 +114,7 @@ mapPins.appendChild(fragment);
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 // функция присвоения значения type
-function russianType(type) {
+function translateType(type) {
   if (type === 'flat') {
     return 'Квартира';
   } else if (type === 'bungalo') {
@@ -125,33 +126,41 @@ function russianType(type) {
   }
 }
 
+// функция создания src для img
+function againPhoto(array) {
+  var string = '';
+  for (i = 0; i <= array.length; i++) {
+    string += '<img src="' + array[i] + '" alt="" title="" />';
+  }
+  return string;
+}
+
 // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
 // функция возвращает отформатированный в соответствии с нашими тредованиямии template
 var renderCard = function (offer) {
   var cardElement = cardTemplate.cloneNode(true);
-  var content = cardElement.querySelector('article');
+  // var article = cardElement.querySelector('article');
   cardTemplate.querySelector('.popup__title').textContent = offer.title;
   cardTemplate.querySelector('.popup__text--address').textContent = offer.address;
   cardTemplate.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-  cardTemplate.querySelector('.popup__type').textContent = russianType(offer.type);
-  cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для' + offer.guests + ' гостей';
+  cardTemplate.querySelector('.popup__type').textContent = translateType(offer.type);
+  cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
   cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
-  // не понимаю как заменить содержимое features. Сначала надо удалить те значения, что есть...
-  cardTemplate.querySelector('.popup__features').textContent = offer.features;
+  // не понимаю как заменить содержимое features. Сначала надо удалить те значения, что есть, а на их место вставить новые
+  cardTemplate.querySelector('.popup__features').innerHTML = offer.features;
   cardTemplate.querySelector('.popup__description').textContent = offer.description;
-  // с массивом фото не ясно...
-  cardTemplate.querySelector('.popup__photos').appendChild(offer.photos);
-  content.setAttribute('photos', offer.photos);
+  cardTemplate.querySelector('.popup__photos').innerHTML = againPhoto(photosArr);
   // как менять аватар тоже не ясно
-  // cardTemplate.querySelector('.popup__avatar') = author.avatar;
-
+  cardTemplate.querySelector('.popup__avatar').textContent = offer.avatar;
   return cardElement;
 };
 
 // в каком месте сделать проверку на заполненность
 // делать ее через true?
-// if (cardElement[i] = false) {
-//  var test = query.Selector('.popup__title').classList.add('hidden');
+// function hidden (cardElement) {
+//  if (cardElement[i] = false) {
+//    var hidden = query.Selector('.popup__title').classList.add('hidden');
+//  }
 // }
 
 // запись полученного нового шаблона в фрагмент
@@ -160,7 +169,7 @@ for (var j = 0; j < objects.length; j++) {
   fragment2.appendChild(renderCard(objects[j]));
 }
 
-// создание переменной, дублирующей содержание класса .map__pin
+// создание переменной, дублирующей содержание класса .map__filters-container'
 var mapCards = document.querySelector('.map__filters-container');
 
 // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
