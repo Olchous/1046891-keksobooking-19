@@ -43,10 +43,8 @@ function createPin() {
     offer: {
       title: text,
       address: {
-        location: {
-          x: getRandomInt(0, 100),
-          y: getRandomInt(130, 630)
-        }
+        x: getRandomInt(0, blockWidth),
+        y: getRandomInt(130, 630)
       },
       price: getRandomInt(1000, 100000),
       type: randomElement(typeArr),
@@ -128,7 +126,7 @@ function translateType(type) {
 function againPhoto(array) {
   var string = '';
   for (i = 0; i <= array.length; i++) {
-    string += '<img src="' + array[i] + '" alt="" title="" />';
+    string += '<img src="' + array[i] + ' class="popup__photo" width="45" height="40" alt="Фотография жилья" />';
   }
   return string;
 }
@@ -139,27 +137,48 @@ var renderCard = function (offerElement) {
   var cardElement = cardTemplate.cloneNode(true);
   var imgAvatar = cardTemplate.querySelector('.popup__avatar');
   cardTemplate.querySelector('.popup__title').textContent = offerElement.offer.title;
+  if (offerElement.offer.title.length === 0) {
+    cardTemplate('.popup__title').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__text--address').textContent = offerElement.offer.address;
+  if (offerElement.offer.address.length === 0) {
+    cardTemplate('.popup__text--address').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__text--price').textContent = offerElement.offer.price + '₽/ночь';
+  if (offerElement.offer.price.length === 0) {
+    cardTemplate('.popup__text--price').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__type').textContent = translateType(offerElement.offer.type);
+  if (offerElement.offer.type.length === 0) {
+    cardTemplate('.popup__type').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__text--capacity').textContent = offerElement.offer.rooms + ' комнаты для ' + offerElement.offer.guests + ' гостей';
+  if (offerElement.offer.rooms.length === 0 || offerElement.offer.guests.length === 0) {
+    cardTemplate('.popup__text--capacity').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerElement.offer.checkin + ', выезд до ' + offerElement.offer.checkout;
+  if (offerElement.offer.checkin.length === 0 || offerElement.offer.checkout.length === 0) {
+    cardTemplate('.popup__text--time').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__features').innerHTML = offerElement.offer.features;
+  if (offerElement.offer.features.length === 0) {
+    cardTemplate('.popup__features').classList.add('visually-hidden');
+  }
   cardTemplate.querySelector('.popup__description').textContent = offerElement.offer.description;
+  if (offerElement.offer.description.length === 0) {
+    cardTemplate('.popup__description').classList.add('visually-hidden');
+  }
   // не меняется фото
   cardTemplate.querySelector('.popup__photos').innerHTML = againPhoto(photosArr);
-  // как менять аватар тоже не ясно
-  imgAvatar.setAttribute('avatar', offerElement.author.avatar);
+  if (againPhoto(photosArr) === 0) {
+    cardTemplate('.popup__photos').classList.add('visually-hidden');
+  }
+  imgAvatar.setAttribute('src', offerElement.author.avatar);
+  if (offerElement.author.avatar === 0) {
+    cardTemplate('.popup__avatar').classList.add('visually-hidden');
+  }
   return cardElement;
 };
-
-// в каком месте сделать проверку на заполненность
-// делать ее через true?
-// function hidden(cardElement) {
-//  if (cardElement = false) {
-//    var hidden = query.Selector('.popup__title').classList.add('hidden');
-//  }
-// }
 
 // запись полученного нового шаблона в фрагмент
 var fragment2 = document.createDocumentFragment();
@@ -172,3 +191,10 @@ var mapCards = document.querySelector('.map__filters-container');
 
 // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
 mapCards.appendChild(fragment2);
+
+// в каком месте сделать проверку на заполненность делать ее через true?
+// function hiddenCard(mapCards) {
+//  if (cardElement.lenght === 0) {
+//    cardTemplate.querySelector('.map__filters-container').classList.add('hidden');
+//  }
+// }
