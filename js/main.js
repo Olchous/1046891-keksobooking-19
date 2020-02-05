@@ -10,7 +10,6 @@ var checkoutArr = ['12:00', '13:00', '14:00'];
 var text = 'Заголовок';
 var textDescription = 'Далее следует текст описания';
 var blockWidth = document.querySelector('.map__pins').offsetWidth;
-// document.write(blockWidth.offsetWidth);
 
 // функция создания рандомной длины
 function getRandomInt(min, max) {
@@ -39,7 +38,7 @@ function getRandomArr(array) {
 function createPin() {
   return {
     author: {
-      avatar: 'img/avatars/user' + '0' + getRandomInt(0, 9) + '.png'
+      avatar: 'img/avatars/user0' + getRandomInt(1, 9) + '.png'
     },
     offer: {
       title: text,
@@ -77,7 +76,7 @@ function createPins() {
 
 var objects = createPins();
 
-// уудаление из разметки класса map--faded
+// удаление из разметки класса map--faded
 document.querySelector('.map--faded').classList.remove('.map--faded');
 
 // поиск в разметке тега pin с классом .map__pin
@@ -109,11 +108,10 @@ mapPins.appendChild(fragment);
 
 
 // домашка часть 2
-
-// поиск в разметке тега card
+// поиск в разметке #card
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-// функция присвоения значения type
+// функция присвоения русскоязычного значения type
 function translateType(type) {
   if (type === 'flat') {
     return 'Квартира';
@@ -126,7 +124,7 @@ function translateType(type) {
   }
 }
 
-// функция создания src для img
+// функция создания нового src для img
 function againPhoto(array) {
   var string = '';
   for (i = 0; i <= array.length; i++) {
@@ -137,28 +135,28 @@ function againPhoto(array) {
 
 // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
 // функция возвращает отформатированный в соответствии с нашими тредованиямии template
-var renderCard = function (offer) {
+var renderCard = function (offerElement) {
   var cardElement = cardTemplate.cloneNode(true);
-  // var article = cardElement.querySelector('article');
-  cardTemplate.querySelector('.popup__title').textContent = offer.title;
-  cardTemplate.querySelector('.popup__text--address').textContent = offer.address;
-  cardTemplate.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-  cardTemplate.querySelector('.popup__type').textContent = translateType(offer.type);
-  cardTemplate.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
-  cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
-  // не понимаю как заменить содержимое features. Сначала надо удалить те значения, что есть, а на их место вставить новые
-  cardTemplate.querySelector('.popup__features').innerHTML = offer.features;
-  cardTemplate.querySelector('.popup__description').textContent = offer.description;
+  var imgAvatar = cardTemplate.querySelector('.popup__avatar');
+  cardTemplate.querySelector('.popup__title').textContent = offerElement.offer.title;
+  cardTemplate.querySelector('.popup__text--address').textContent = offerElement.offer.address;
+  cardTemplate.querySelector('.popup__text--price').textContent = offerElement.offer.price + '₽/ночь';
+  cardTemplate.querySelector('.popup__type').textContent = translateType(offerElement.offer.type);
+  cardTemplate.querySelector('.popup__text--capacity').textContent = offerElement.offer.rooms + ' комнаты для ' + offerElement.offer.guests + ' гостей';
+  cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerElement.offer.checkin + ', выезд до ' + offerElement.offer.checkout;
+  cardTemplate.querySelector('.popup__features').innerHTML = offerElement.offer.features;
+  cardTemplate.querySelector('.popup__description').textContent = offerElement.offer.description;
+  // не меняется фото
   cardTemplate.querySelector('.popup__photos').innerHTML = againPhoto(photosArr);
   // как менять аватар тоже не ясно
-  cardTemplate.querySelector('.popup__avatar').textContent = offer.avatar;
+  imgAvatar.setAttribute('avatar', offerElement.author.avatar);
   return cardElement;
 };
 
 // в каком месте сделать проверку на заполненность
 // делать ее через true?
-// function hidden (cardElement) {
-//  if (cardElement[i] = false) {
+// function hidden(cardElement) {
+//  if (cardElement = false) {
 //    var hidden = query.Selector('.popup__title').classList.add('hidden');
 //  }
 // }
