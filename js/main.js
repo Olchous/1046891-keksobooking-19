@@ -2,6 +2,9 @@
 
 // переменные, используемые в коде
 var NUMBER_OBJECTS = 8;
+var MAX_TITLE_LENGTH = 100;
+var MIN_TITLE_LENGTH = 30;
+var MAX_PRICE = 1000000
 var typeArr = ['palace', 'flat', 'house', 'bungalo'];
 var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
@@ -75,7 +78,7 @@ function createPins() {
 var objects = createPins();
 
 // удаление из разметки класса map--faded
-document.querySelector('.map--faded').classList.remove('.map--faded');
+// document.querySelector('.map--faded').classList.remove('.map--faded');
 
 // поиск в разметке тега pin с классом .map__pin
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -102,11 +105,11 @@ for (var i = 0; i < objects.length; i++) {
 var mapPins = document.querySelector('.map__pins');
 
 // присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили и данные
-mapPins.appendChild(fragment);
+// mapPins.appendChild(fragment);
 
 
-// домашка часть 2
-// поиск в разметке #card
+// // домашка часть 2
+// // поиск в разметке #card
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 // функция присвоения русскоязычного значения type
@@ -189,12 +192,100 @@ for (var j = 0; j < objects.length; j++) {
 // создание переменной, дублирующей содержание класса .map__filters-container'
 var mapCards = document.querySelector('.map__filters-container');
 
-// присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
-mapCards.appendChild(fragment2);
+// // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
+// mapCards.appendChild(fragment2);
 
-// в каком месте сделать проверку на заполненность делать ее через true?
-// function hiddenCard(mapCards) {
-//  if (cardElement.lenght === 0) {
-//    cardTemplate.querySelector('.map__filters-container').classList.add('hidden');
-//  }
-// }
+// домашка 3
+// неактивное состояние
+
+// Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
+var adForm = document.querySelector('.ad-form').classList.add('.ad-form--disabled');
+
+// Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled
+// добавленного на них или на их родительские блоки fieldset;
+adForm.querySelectorAll('input').setAttribute('disabled', 'disabled');
+adForm.querySelectorAll('select').setAttribute('disabled', 'disabled');
+adForm.querySelectorAll('fieldset').setAttribute('disabled', 'disabled');
+
+// Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
+document.querySelector('form .map__filters').classList.add('.ad-form--disabled');
+
+// валидатор заголовка
+var priceOfferInput = document.querySelector('.ad-form__element #title');
+
+titleOfferInput.addEventListener('invalid', function () {
+  if (titleOfferInput.validity.tooShort) {
+    titleOfferInput.setCustomValidity('Минимальная длина — 30 символов');
+  } else if (titleOfferInput.validity.tooLong) {
+    titleOfferInput.setCustomValidity('Максимальная длина — 100 символов');
+  } else if (titleOfferInput.validity.valueMissing) {
+    titleOfferInput.setCustomValidity('Обязательное поле');
+  }
+});
+
+titleOfferInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < MIN_TITLE_LENGTH) {
+    target.setCustomValidity('Заголовок должен состоять минимум из ' + MIN_TITLE_LENGTH + ' символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+titleOfferInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length >= MAX_TITLE_LENGTH) {
+    target.setCustomValidity('Заголовок должен состоять максимум из ' + MAX_TITLE_LENGTH + 'символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+// валидатор цена за ночь
+// Обязательное поле;
+// Числовое поле;
+// Максимальное значение — 1000000.
+// вместе с минимальным значением цены нужно изменять и плейсхолдер
+
+var priceOfferInput = document.querySelector('.ad-form__element #price');
+
+priceOfferInput.addEventListener('invalid', function () {
+  if (priceOfferInput.validity.tooLong) {
+    priceOfferInput.setCustomValidity('Максимальная стоимость— 1000000');
+  } else if (priceOfferInput.validity.valueMissing) {
+    priceOfferInput.setCustomValidity('Обязательное поле');
+    else if (priceOfferInput.validity.value) // а как проверить на число это или буква?
+       {
+    priceOfferInput.setCustomValidity('Числовое поле');
+  }
+});
+
+// подумать над изменениями в placeholder
+
+priceOfferInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length >= MAX_PRICE) {
+    target.setCustomValidity('Максимальная стоимость ' + MAX_PRICE);
+  } else {
+    target.setCustomValidity('');
+  }
+});
+// валидатор цена за тип жилья
+// «Бунгало» — минимальная цена за ночь 0;
+// «Квартира» — минимальная цена за ночь 1 000;
+// «Дом» — минимальная цена 5 000;
+// «Дворец» — минимальная цена 10 000.
+
+// валидатор Адрес: ручное редактирование поля запрещено.
+// Значение автоматически выставляется при перемещении метки .map__pin--main по карте.
+// Подробности заполнения поля адреса, описаны вместе с поведением метки.
+
+// валидатор Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля,
+// во втором выделяется соответствующее ему.
+
+// валидатор Поле «Количество комнат» синхронизировано с полем «Количество мест» таким образом,
+// что при выборе количества комнат вводятся ограничения на допустимые варианты выбора количества гостей:
+// 1 комната — «для 1 гостя»;
+// 2 комнаты — «для 2 гостей» или «для 1 гостя»;
+// 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
+// 100 комнат — «не для гостей».
