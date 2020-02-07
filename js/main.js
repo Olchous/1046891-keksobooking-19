@@ -4,7 +4,7 @@
 var NUMBER_OBJECTS = 8;
 var MAX_TITLE_LENGTH = 100;
 var MIN_TITLE_LENGTH = 30;
-var MAX_PRICE = 1000000
+var MAX_PRICE = 1000000;
 var typeArr = ['palace', 'flat', 'house', 'bungalo'];
 var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
@@ -129,7 +129,7 @@ function translateType(type) {
 function againPhoto(array) {
   var string = '';
   for (i = 0; i <= array.length; i++) {
-    string += '<img src="' + array[i] + ' class="popup__photo" width="45" height="40" alt="Фотография жилья" />';
+    string += '<img src=' + array[i] + ' class="popup__photo" width="45" height="40" alt="Фотография жилья" />';
   }
   return string;
 }
@@ -141,35 +141,35 @@ var renderCard = function (offerElement) {
   var imgAvatar = cardTemplate.querySelector('.popup__avatar');
   cardTemplate.querySelector('.popup__title').textContent = offerElement.offer.title;
   if (offerElement.offer.title.length === 0) {
-    cardTemplate('.popup__title').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__title').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__text--address').textContent = offerElement.offer.address;
   if (offerElement.offer.address.length === 0) {
-    cardTemplate('.popup__text--address').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__text--address').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__text--price').textContent = offerElement.offer.price + '₽/ночь';
   if (offerElement.offer.price.length === 0) {
-    cardTemplate('.popup__text--price').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__text--price').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__type').textContent = translateType(offerElement.offer.type);
   if (offerElement.offer.type.length === 0) {
-    cardTemplate('.popup__type').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__type').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__text--capacity').textContent = offerElement.offer.rooms + ' комнаты для ' + offerElement.offer.guests + ' гостей';
   if (offerElement.offer.rooms.length === 0 || offerElement.offer.guests.length === 0) {
-    cardTemplate('.popup__text--capacity').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__text--capacity').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerElement.offer.checkin + ', выезд до ' + offerElement.offer.checkout;
   if (offerElement.offer.checkin.length === 0 || offerElement.offer.checkout.length === 0) {
-    cardTemplate('.popup__text--time').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__text--time').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__features').innerHTML = offerElement.offer.features;
   if (offerElement.offer.features.length === 0) {
-    cardTemplate('.popup__features').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__features').classList.add('visually-hidden');
   }
   cardTemplate.querySelector('.popup__description').textContent = offerElement.offer.description;
   if (offerElement.offer.description.length === 0) {
-    cardTemplate('.popup__description').classList.add('visually-hidden');
+    cardTemplate.querySelector('.popup__description').classList.add('visually-hidden');
   }
   // не меняется фото
   cardTemplate.querySelector('.popup__photos').innerHTML = againPhoto(photosArr);
@@ -177,7 +177,7 @@ var renderCard = function (offerElement) {
     cardTemplate('.popup__photos').classList.add('visually-hidden');
   }
   imgAvatar.setAttribute('src', offerElement.author.avatar);
-  if (offerElement.author.avatar === 0) {
+  if (offerElement.author.avatar.length === 0) {
     cardTemplate('.popup__avatar').classList.add('visually-hidden');
   }
   return cardElement;
@@ -196,7 +196,12 @@ var mapCards = document.querySelector('.map__filters-container');
 // mapCards.appendChild(fragment2);
 
 // домашка 3
-// неактивное состояние
+// активация страницы
+document.querySelector('.map__pin-main').addEventListener('mousedown', function (evt) {
+  if (evt.which == 1) {
+    document.querySelector('.map__pin-main').classList.remove('disabled');
+  }
+});
 
 // Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
 var adForm = document.querySelector('.ad-form').classList.add('.ad-form--disabled');
@@ -210,8 +215,9 @@ adForm.querySelectorAll('fieldset').setAttribute('disabled', 'disabled');
 // Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
 document.querySelector('form .map__filters').classList.add('.ad-form--disabled');
 
+
 // валидатор заголовка
-var priceOfferInput = document.querySelector('.ad-form__element #title');
+var titleOfferInput = document.querySelector('.ad-form__element #title');
 
 titleOfferInput.addEventListener('invalid', function () {
   if (titleOfferInput.validity.tooShort) {
@@ -227,20 +233,65 @@ titleOfferInput.addEventListener('input', function (evt) {
   var target = evt.target;
   if (target.value.length < MIN_TITLE_LENGTH) {
     target.setCustomValidity('Заголовок должен состоять минимум из ' + MIN_TITLE_LENGTH + ' символов');
-  } else {
-    target.setCustomValidity('');
-  }
-});
-
-titleOfferInput.addEventListener('input', function (evt) {
-  var target = evt.target;
-  if (target.value.length >= MAX_TITLE_LENGTH) {
+  } else if (target.value.length >= MAX_TITLE_LENGTH) {
     target.setCustomValidity('Заголовок должен состоять максимум из ' + MAX_TITLE_LENGTH + 'символов');
   } else {
     target.setCustomValidity('');
   }
 });
 
+// валидатор соотношение гостей и комнат
+var numbGuests = document.querySelector('.ad-form__element #capacity');
+var numbRooms = document.querySelector('.ad-form__element #capacity');
+
+numbRooms.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value < numbGuests) {
+    target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+numbGuests.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value > numbRooms) {
+    target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+  } else if (target.value === 100) {
+    target.setCustomValidity('Это помещение не для гостей');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+// валидатор времени выезда и заезда
+var timeIn = document.querySelector('.ad-form__element--time #timein');
+var timeOut = document.querySelector('.ad-form__element--time #timeout');
+
+timeOut.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value !== timeIn) {
+    target.setCustomValidity('Время заезда должно быть равно времени выезда');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+timeIn.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value !== timeOut) {
+    target.setCustomValidity('Время заезда должно быть равно времени выезда');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+// 1. Забираем значение комнат.
+// 2. Забираем значение гостей
+// 3. Сравниваем. Если не равны, при условии, что гостей в 2р больше чем комнат, то валидатор говорит,
+// что проверка не пройдена. Верно? Я реализацию напишу завтра. У меня дико логает комп и завтра рано вставать.
+// Поэтому я ставлю его на обновление и себя тоже:)
+// Твои ответы мне очень помогут завтра утром начать день с хорошего кода
 // валидатор цена за ночь
 // Обязательное поле;
 // Числовое поле;
@@ -254,8 +305,7 @@ priceOfferInput.addEventListener('invalid', function () {
     priceOfferInput.setCustomValidity('Максимальная стоимость— 1000000');
   } else if (priceOfferInput.validity.valueMissing) {
     priceOfferInput.setCustomValidity('Обязательное поле');
-    else if (priceOfferInput.validity.value) // а как проверить на число это или буква?
-       {
+  } else if (priceOfferInput.validity.pattern['A-Za-z']) {
     priceOfferInput.setCustomValidity('Числовое поле');
   }
 });
@@ -270,6 +320,7 @@ priceOfferInput.addEventListener('input', function (evt) {
     target.setCustomValidity('');
   }
 });
+
 // валидатор цена за тип жилья
 // «Бунгало» — минимальная цена за ночь 0;
 // «Квартира» — минимальная цена за ночь 1 000;
