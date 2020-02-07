@@ -13,6 +13,7 @@ var checkoutArr = ['12:00', '13:00', '14:00'];
 var text = 'Заголовок';
 var textDescription = 'Далее следует текст описания';
 var blockWidth = document.querySelector('.map__pins').offsetWidth;
+var blockHeight = document.querySelector('.map__pins').offsetHeight;
 
 // функция создания рандомной длины
 function getRandomInt(min, max) {
@@ -171,7 +172,6 @@ var renderCard = function (offerElement) {
   if (offerElement.offer.description.length === 0) {
     cardTemplate.querySelector('.popup__description').classList.add('visually-hidden');
   }
-  // не меняется фото
   cardTemplate.querySelector('.popup__photos').innerHTML = againPhoto(photosArr);
   if (againPhoto(photosArr) === 0) {
     cardTemplate('.popup__photos').classList.add('visually-hidden');
@@ -196,25 +196,46 @@ var mapCards = document.querySelector('.map__filters-container');
 // mapCards.appendChild(fragment2);
 
 // домашка 3
-// активация страницы
-document.querySelector('.map__pin-main').addEventListener('mousedown', function (evt) {
-  if (evt.which == 1) {
-    document.querySelector('.map__pin-main').classList.remove('disabled');
-  }
-});
-
+// обеспечение неактивности страницы
 // Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
-var adForm = document.querySelector('.ad-form').classList.add('.ad-form--disabled');
-
-// Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled
-// добавленного на них или на их родительские блоки fieldset;
-adForm.querySelectorAll('input').setAttribute('disabled', 'disabled');
-adForm.querySelectorAll('select').setAttribute('disabled', 'disabled');
-adForm.querySelectorAll('fieldset').setAttribute('disabled', 'disabled');
+var adForm = document.querySelector('.ad-form');
+adForm.classList.add('ad-form--disabled');
 
 // Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
-document.querySelector('form .map__filters').classList.add('.ad-form--disabled');
+document.querySelector('.map__filters').classList.add('ad-form--disabled');
 
+// Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled
+function disableAttribute(array) {
+  for (var k = 0; k < array.length; k++) {
+    array[k].setAttribute('disabled', 'disabled');
+  }
+}
+
+disableAttribute(adForm.querySelectorAll('input'));
+disableAttribute(adForm.querySelectorAll('select'));
+disableAttribute(adForm.querySelectorAll('fieldset'));
+
+// активация страницы
+function deleteDisable(array) {
+  for (var k = 0; k < array.length; k++) {
+    array[k].removeAttribute('disabled');
+  }
+}
+
+// установка в placeholder адреса
+adForm.querySelector('#address').setAttribute('placeholder', location.x + ', ' + location.y);
+
+document.querySelector('.map__pin--main').addEventListener('mousedown', function (evt) {
+  if (evt.which === 1) {
+    adForm.classList.remove('ad-form--disabled');
+    deleteDisable(adForm.querySelectorAll('input'));
+    deleteDisable(adForm.querySelectorAll('select'));
+    deleteDisable(adForm.querySelectorAll('fieldset'));
+    document.querySelector('.map__filters').classList.remove('ad-form--disabled');
+    document.querySelector('.map__pin--main').style.top = location.y + blockHeight - location.y;
+    document.querySelector('.map__pin--main').style.left = location.x + blockWidth - location.x;
+  }
+});
 
 // валидатор заголовка
 var titleOfferInput = document.querySelector('.ad-form__element #title');
@@ -253,7 +274,7 @@ numbRooms.addEventListener('input', function (evt) {
   }
 });
 
-numbGuests.addEventListener('input', function (evt) {
+numbGuests.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value > numbRooms) {
     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
@@ -268,7 +289,7 @@ numbGuests.addEventListener('input', function (evt) {
 var timeIn = document.querySelector('.ad-form__element--time #timein');
 var timeOut = document.querySelector('.ad-form__element--time #timeout');
 
-timeOut.addEventListener('input', function (evt) {
+timeOut.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value !== timeIn) {
     target.setCustomValidity('Время заезда должно быть равно времени выезда');
