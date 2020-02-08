@@ -106,7 +106,7 @@ for (var i = 0; i < objects.length; i++) {
 var mapPins = document.querySelector('.map__pins');
 
 // присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили и данные
-mapPins.appendChild(fragment);
+// mapPins.appendChild(fragment);
 
 
 // // домашка часть 2
@@ -193,7 +193,7 @@ for (var j = 0; j < objects.length; j++) {
 var mapCards = document.querySelector('.map__filters-container');
 
 // // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
-mapCards.appendChild(fragment2);
+// mapCards.appendChild(fragment2);
 
 // домашка 3
 // обеспечение неактивности страницы
@@ -221,12 +221,21 @@ function deleteDisable(array) {
     array[k].removeAttribute('disabled');
   }
 }
+// активация через фокус и enter
+var activePage = function (evt) {
+  if (evt.key === ENTER_KEY) {
+    deleteDisable();
+
+// var openPin = function () {
+//   setup.classList.add('hidden');
+//   document.addEventListener('keydown', activePage);
+// };
 
 // установка в placeholder адреса
 adForm.querySelector('#address').setAttribute('placeholder', location.x + ', ' + location.y);
 
 document.querySelector('.map__pin--main').addEventListener('mousedown', function (evt) {
-  if (evt.which === 1) {
+  if (evt.button === 0) {
     adForm.classList.remove('ad-form--disabled');
     deleteDisable(adForm.querySelectorAll('input'));
     deleteDisable(adForm.querySelectorAll('select'));
