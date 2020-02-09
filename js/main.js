@@ -14,6 +14,8 @@ var text = 'Заголовок';
 var textDescription = 'Далее следует текст описания';
 var blockWidth = document.querySelector('.map__pins').offsetWidth;
 var blockHeight = document.querySelector('.map__pins').offsetHeight;
+var ENTER_KEY = 'Enter';
+var ESC_KEY = 'Escape';
 
 // функция создания рандомной длины
 function getRandomInt(min, max) {
@@ -91,7 +93,7 @@ var renderLocation = function (pin) {
   var img = pinElement.querySelector('img');
   pinElement.style.top = pin.location.y + 'px';
   pinElement.style.left = pin.location.x + 'px';
-  img.setAttribute('avatar', pin.avatar);
+  img.setAttribute('src', pin.author.avatar);
   img.setAttribute('title', pin.title);
   return pinElement;
 };
@@ -102,11 +104,11 @@ for (var i = 0; i < objects.length; i++) {
   fragment.appendChild(renderLocation(objects[i]));
 }
 
-// создание переменной, дублирующей содержание класса .map__pin
+// создание переменной, дублирующей содержание класса .map__pins
 var mapPins = document.querySelector('.map__pins');
 
 // присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили и данные
-// mapPins.appendChild(fragment);
+mapPins.appendChild(fragment);
 
 
 // // домашка часть 2
@@ -193,7 +195,7 @@ for (var j = 0; j < objects.length; j++) {
 var mapCards = document.querySelector('.map__filters-container');
 
 // // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
-// mapCards.appendChild(fragment2);
+mapCards.appendChild(fragment2);
 
 // домашка 3
 // обеспечение неактивности страницы
@@ -222,27 +224,28 @@ function deleteDisable(array) {
   }
 }
 // активация через фокус и enter
-var activePage = function (evt) {
-  if (evt.key === ENTER_KEY) {
-    deleteDisable();
-
-// var openPin = function () {
-//   setup.classList.add('hidden');
-//   document.addEventListener('keydown', activePage);
-// };
-
-// установка в placeholder адреса
+var mapPinMain = document.querySelector('.map__pin--main');
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY || mapPinMain.focus()) {
+    deleteDisable(mapPinMain);
+    mapPinMain.querySelector('svg ellipse').style.display = 'none';
+    mapPinMain.querySelector('svg text').style.display = 'none';
+  }
+});
+// установка в placeholder адреса и активация
 adForm.querySelector('#address').setAttribute('placeholder', location.x + ', ' + location.y);
 
-document.querySelector('.map__pin--main').addEventListener('mousedown', function (evt) {
+mapPinMain.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
     adForm.classList.remove('ad-form--disabled');
     deleteDisable(adForm.querySelectorAll('input'));
     deleteDisable(adForm.querySelectorAll('select'));
     deleteDisable(adForm.querySelectorAll('fieldset'));
     document.querySelector('.map__filters').classList.remove('ad-form--disabled');
-    document.querySelector('.map__pin--main').style.top = location.y + blockHeight - location.y;
-    document.querySelector('.map__pin--main').style.left = location.x + blockWidth - location.x;
+    mapPinMain.style.top = location.y + blockHeight - location.y;
+    mapPinMain.style.left = location.x + blockWidth - location.x;
+    mapPinMain.querySelector('svg ellipse').style.display = 'none';
+    mapPinMain.querySelector('svg text').style.display = 'none';
   }
 });
 
@@ -259,7 +262,7 @@ titleOfferInput.addEventListener('invalid', function () {
   }
 });
 
-titleOfferInput.addEventListener('input', function (evt) {
+titleOfferInput.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value.length < MIN_TITLE_LENGTH) {
     target.setCustomValidity('Заголовок должен состоять минимум из ' + MIN_TITLE_LENGTH + ' символов');
@@ -274,7 +277,7 @@ titleOfferInput.addEventListener('input', function (evt) {
 var numbGuests = document.querySelector('.ad-form__element #capacity');
 var numbRooms = document.querySelector('.ad-form__element #capacity');
 
-numbRooms.addEventListener('input', function (evt) {
+numbRooms.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value < numbGuests) {
     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
@@ -307,7 +310,7 @@ timeOut.addEventListener('change', function (evt) {
   }
 });
 
-timeIn.addEventListener('input', function (evt) {
+timeIn.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value !== timeOut) {
     target.setCustomValidity('Время заезда должно быть равно времени выезда');
@@ -361,4 +364,57 @@ priceOfferInput.addEventListener('input', function (evt) {
 // 1 комната — «для 1 гостя»;
 // 2 комнаты — «для 2 гостей» или «для 1 гостя»;
 // 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
-// 100 комнат — «не для гостей».
+// 100 комнат — «не для гостей
+
+// домашка 4
+// отрисовка и закрытие карточки по клику
+var popupClose = document.querySelector('.popup__close');
+var popupOpen = document.querySelectorAll('.map__pin');
+function tabindex(array) {
+  for (var m = 0; m < array.length; m++) {
+    array[m].setAttribute('tabindex', '0');
+  }
+}
+tabindex(popupOpen);
+
+var cardPopup = document.querySelector('.map__filters-container');
+
+var onCardEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  cardPopup.classList.remove('hidden');
+  document.addEventListener('keydown', onCardEscPress);
+};
+
+var closePopup = function () {
+  cardPopup.classList.add('hidden');
+  document.removeEventListener('keydown', onCardEscPress);
+};
+
+popupClose.addEventListener('click', function () {
+  cardPopup.classList.add('hidden');
+});
+
+popupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+popupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+popupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openPopup();
+  }
+});
+
+popupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closePopup();
+  }
+});
