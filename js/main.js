@@ -107,12 +107,8 @@ for (var i = 0; i < objects.length; i++) {
 // создание переменной, дублирующей содержание класса .map__pins
 var mapPins = document.querySelector('.map__pins');
 
-// присваивание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили и данные
-mapPins.appendChild(fragment);
-
-
-// // домашка часть 2
-// // поиск в разметке #card
+// домашка часть 2
+// поиск в разметке #card
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 // функция присвоения русскоязычного значения type
@@ -194,8 +190,8 @@ for (var j = 0; j < objects.length; j++) {
 // создание переменной, дублирующей содержание класса .map__filters-container'
 var mapCards = document.querySelector('.map__filters-container');
 
-// // присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
-mapCards.appendChild(fragment2);
+// присваевание новой переменной, содержащей атрибуты класса .map__pin фрагмента с шаблоном, содержащим новые стили
+
 
 // домашка 3
 // обеспечение неактивности страницы
@@ -246,6 +242,8 @@ mapPinMain.addEventListener('mousedown', function (evt) {
     mapPinMain.style.left = location.x + blockWidth - location.x;
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
+    mapPins.appendChild(fragment);
+    mapCards.appendChild(fragment2);
   }
 });
 
