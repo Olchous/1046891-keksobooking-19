@@ -91,11 +91,14 @@ var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__p
 var renderLocation = function (pin) {
   var pinElement = pinsTemplate.cloneNode(true);
   var img = pinElement.querySelector('img');
+  // var button = pinElement.querySelector('button');
   pinElement.style.top = pin.location.y + 'px';
   pinElement.style.left = pin.location.x + 'px';
   img.setAttribute('src', pin.author.avatar);
   img.setAttribute('title', pin.title);
+  pinElement.setAttribute('tabindex', 0);
   return pinElement;
+
 };
 
 // запись полученного нового шаблона в фрагмент
@@ -320,9 +323,7 @@ timeIn.addEventListener('change', function (evt) {
 
 // валидатор цена за ночь
 // вместе с минимальным значением цены нужно изменять и плейсхолдер
-
 var priceOfferInput = document.querySelector('.ad-form__element #price');
-
 priceOfferInput.addEventListener('invalid', function () {
   if (priceOfferInput.validity.tooLong) {
     priceOfferInput.setCustomValidity('Максимальная стоимость— 1000000');
@@ -345,11 +346,20 @@ priceOfferInput.addEventListener('input', function (evt) {
 });
 
 // валидатор цена за тип жилья
-// «Бунгало» — минимальная цена за ночь 0;
-// «Квартира» — минимальная цена за ночь 1 000;
-// «Дом» — минимальная цена 5 000;
-// «Дворец» — минимальная цена 10 000.
+var typeOffer = document.querySelector('.ad-form_element #type');
+typeOffer.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value = 'Бунгало') {
+    priceOfferInput.setAttribute('placeholder', 0);
+  } else if (target.value = 'Квартира') {
+    priceOfferInput.setAttribute('placeholder', 1000);
+  } else if (target.value = 'Дом') {
+    priceOfferInput.setAttribute('placeholder', 5000);
+  } else {
+    priceOfferInput.setAttribute('placeholder', 10000);
+  }
 
+});
 // валидатор Адрес: ручное редактирование поля запрещено.
 // Значение автоматически выставляется при перемещении метки .map__pin--main по карте.
 // Подробности заполнения поля адреса, описаны вместе с поведением метки.
@@ -366,16 +376,11 @@ priceOfferInput.addEventListener('input', function (evt) {
 
 // домашка 4
 // отрисовка и закрытие карточки по клику
-var popupClose = document.querySelector('.popup__close');
-var popupOpen = document.querySelectorAll('.map__pin');
-function tabindex(array) {
-  for (var m = 0; m < array.length; m++) {
-    array[m].setAttribute('tabindex', '0');
-  }
-}
-tabindex(popupOpen);
-
 var cardPopup = document.querySelector('.map__filters-container');
+cardPopup.classList.add('hidden');
+var popupClose = cardPopup.querySelector('.popup__close');
+
+var popupOpen = document.querySelector('.map__pin');
 
 var onCardEscPress = function (evt) {
   if (evt.key === ESC_KEY) {
@@ -401,18 +406,18 @@ popupOpen.addEventListener('click', function () {
   openPopup();
 });
 
-popupClose.addEventListener('click', function () {
-  closePopup();
-});
+// popupClose.addEventListener('click', function () {
+//   closePopup();
+// });
 
-popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPopup();
-  }
-});
+// popupOpen.addEventListener('keydown', function (evt) {
+//   if (evt.key === ENTER_KEY) {
+//     openPopup();
+//   }
+// });
 
-popupClose.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    closePopup();
-  }
-});
+// popupClose.addEventListener('keydown', function (evt) {
+//   if (evt.key === ENTER_KEY) {
+//     closePopup();
+//   }
+// });
