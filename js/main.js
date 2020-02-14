@@ -189,7 +189,7 @@ var renderCard = function (offerElement) {
   if (offerElement.author.avatar.length === 0) {
     cardsElement.querySelector('.popup__avatar').classList.add('hidden');
   }
-
+console.log(renderCard);
 };
 
 // // запись полученного нового шаблона в фрагмент
@@ -409,8 +409,8 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('click', function (evt) {
-  if (evt.target.closest('.map__pin button')) {
-    openPopup(evt.target.closest('.map__pin button').dataset.id);
+  if (evt.target.closest('.map__pin')) {
+    openPopup(evt.target.closest('.map__pin').dataset.id);
   }
 });
 
@@ -419,8 +419,8 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.target.closest('.map__pin button')) {
-    openPopup(evt.target.closest('.map__pin button').dataset.id);
+  if (evt.target.closest('.map__pin')) {
+    openPopup(evt.target.closest('.map__pin').dataset.id);
   }
 });
 
