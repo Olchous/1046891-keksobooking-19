@@ -368,10 +368,10 @@ typeOffer.addEventListener('change', function (evt) {
 });
 
 // валидатор изображений
-var photoOffer = document.querySelector('.add-form__element #avatar');
+var photoOffer = document.querySelector('.ad-form #avatar');
 photoOffer.setAttribute('accept', 'image/png, image/jpeg');
 
-var imageOffer = document.querySelector('.add-form__element #images');
+var imageOffer = document.querySelector('.ad-form__element #images');
 imageOffer.setAttribute('accept', 'image/png, image/jpeg');
 
 // валидатор Адрес: ручное редактирование поля запрещено.
@@ -383,7 +383,6 @@ imageOffer.setAttribute('accept', 'image/png, image/jpeg');
 
 var cardPopup = document.querySelector('.map__card.popup');
 cardPopup.classList.add('hidden');
-// cardPopup.classList.add('hidden');
 var popupClose = document.querySelector('.popup__close');
 
 var popupOpen = document.querySelector('.map__pins');
@@ -410,8 +409,8 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('map__pin') || evt.target.parentElement.classList.contains('map__pin')) {
-    openPopup(evt.target.parentElement.dataset.id);
+  if (evt.target.closest('.map__pin button')) {
+    openPopup(evt.target.closest('.map__pin button').dataset.id);
   }
 });
 
@@ -420,8 +419,8 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.target.classList.contains('map__pin') || evt.target.parentElement.classList.contains('map__pin')) {
-    openPopup(evt.target.parentElement.dataset.id);
+  if (evt.target.closest('.map__pin button')) {
+    openPopup(evt.target.closest('.map__pin button').dataset.id);
   }
 });
 
