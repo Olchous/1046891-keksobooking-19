@@ -367,6 +367,13 @@ typeOffer.addEventListener('change', function (evt) {
 
 });
 
+// валидатор изображений
+var photoOffer = document.querySelector('.add-form__element #avatar');
+photoOffer.setAttribute('accept', 'image/png, image/jpeg');
+
+var imageOffer = document.querySelector('.add-form__element #images');
+imageOffer.setAttribute('accept', 'image/png, image/jpeg');
+
 // валидатор Адрес: ручное редактирование поля запрещено.
 // Значение автоматически выставляется при перемещении метки .map__pin--main по карте.
 // Подробности заполнения поля адреса, описаны вместе с поведением метки.
@@ -402,9 +409,9 @@ popupClose.addEventListener('click', function () {
   cardPopup.classList.add('hidden');
 });
 
-popupOpen.addEventListener('click', function (e) {
-  if (e.target.classList.contains('map__pin') || e.target.parentElement.classList.contains('map__pin')) {
-    openPopup(e.target.parentElement.dataset.id);
+popupOpen.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('map__pin') || evt.target.parentElement.classList.contains('map__pin')) {
+    openPopup(evt.target.parentElement.dataset.id);
   }
 });
 
@@ -413,8 +420,8 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPopup();
+  if (evt.target.classList.contains('map__pin') || evt.target.parentElement.classList.contains('map__pin')) {
+    openPopup(evt.target.parentElement.dataset.id);
   }
 });
 
