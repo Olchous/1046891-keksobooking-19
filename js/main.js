@@ -409,7 +409,7 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('click', function (evt) {
-  if (evt.target.closest('.map__pin')) {
+  if (evt.target.closest('.map__pin') && !evt.target.closest('.map__pin').classList.contains('.map__pin--main')) {
     openPopup(evt.target.closest('.map__pin').dataset.id);
   }
 });
@@ -419,7 +419,7 @@ popupClose.addEventListener('click', function () {
 });
 
 popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.target.closest('.map__pin')) {
+  if (evt.target.closest('.map__pin') && !evt.target.closest('.map__pin').classList.contains('.map__pin--main')) {
     openPopup(evt.target.closest('.map__pin').dataset.id);
   }
 });
