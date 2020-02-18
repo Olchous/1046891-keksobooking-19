@@ -292,7 +292,8 @@ var numbRooms = document.querySelector('.ad-form__element #room_number');
 
 numbRooms.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value < numbGuests) {
+  console.log(target.value);
+  if (target.value < numbGuests.value) {
     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
   } else {
     target.setCustomValidity('');
@@ -301,7 +302,8 @@ numbRooms.addEventListener('change', function (evt) {
 
 numbGuests.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value > numbRooms) {
+  console.log(target.value);
+  if (target.value > numbRooms.value) {
     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
   } else if (target.value === 100) {
     target.setCustomValidity('Это помещение не для гостей');
@@ -326,6 +328,7 @@ timeOut.addEventListener('change', function (evt) {
 
 timeIn.addEventListener('change', function (evt) {
   var target = evt.target;
+  console.log(target.value);
   if (target.value !== timeOut.value) {
     target.setCustomValidity('Время заезда должно быть равно времени выезда');
   } else {
