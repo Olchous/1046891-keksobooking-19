@@ -169,12 +169,14 @@ var renderCard = function (offerElement) {
   if (offerElement.offer.checkin.length === 0 || offerElement.offer.checkout.length === 0) {
     cardsElement.querySelector('.popup__text--time').classList.add('visually-hidden');
   }
-  cardsElement.querySelector('.popup__features').innerHTML = changeFeatures(featuresArr);
-  if (featuresArr === 0) {
-    cardsElement.querySelector('.popup__features').classList.add('visually-hidden');
-  } else {
-    cardsElement.querySelector('.popup__features').innerHTML = '';
-  }
+  cardsElement.querySelector('.popup__features').innerHTML = changeFeatures(getRandomArr(featuresArr));
+  console.log(changeFeatures(getRandomArr(featuresArr)));
+  // if (featuresArr === 0) {
+  //   cardsElement.querySelector('.popup__features').classList.add('visually-hidden');
+  // }
+  // else {
+  //   cardsElement.querySelector('.popup__features').innerHTML = '';
+  // }
   cardsElement.querySelector('.popup__description').textContent = offerElement.offer.description;
   if (offerElement.offer.description.length === 0) {
     cardsElement.querySelector('.popup__description').classList.add('visually-hidden');
@@ -292,8 +294,7 @@ var numbRooms = document.querySelector('.ad-form__element #room_number');
 
 numbRooms.addEventListener('change', function (evt) {
   var target = evt.target;
-  console.log(target.value);
-  if (target.value < numbGuests.value) {
+  if (target.value <= numbGuests.value) {
     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
   } else {
     target.setCustomValidity('');
@@ -302,9 +303,8 @@ numbRooms.addEventListener('change', function (evt) {
 
 numbGuests.addEventListener('change', function (evt) {
   var target = evt.target;
-  console.log(target.value);
-  if (target.value > numbRooms.value) {
-    target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+  if (target.value >= numbRooms.value) {
+    target.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
   } else if (target.value === 100) {
     target.setCustomValidity('Это помещение не для гостей');
   } else {
@@ -318,7 +318,6 @@ var timeOut = document.querySelector('.ad-form__element--time #timeout');
 
 timeOut.addEventListener('change', function (evt) {
   var target = evt.target;
-  console.log(target.value);
   if (target.value !== timeIn.value) {
     target.setCustomValidity('Время выезда должно быть равно времени заезда');
   } else {
@@ -328,7 +327,6 @@ timeOut.addEventListener('change', function (evt) {
 
 timeIn.addEventListener('change', function (evt) {
   var target = evt.target;
-  console.log(target.value);
   if (target.value !== timeOut.value) {
     target.setCustomValidity('Время заезда должно быть равно времени выезда');
   } else {
