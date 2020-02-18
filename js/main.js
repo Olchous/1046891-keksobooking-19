@@ -30,12 +30,12 @@ function randomElement(items) {
 // функция создания массива рандомной длины с рандомными элементами внутри
 function getRandomArr(array) {
   var copyArray = array.slice();
-  var randomLength = getRandomInt(1, array.length - 1);
+  var randomLength = getRandomInt(0, array.length - 1);
   var newArr = [];
   for (var i = 0; i < randomLength; i++) {
     var randomIndex = getRandomInt(0, copyArray.length - 1);
     newArr.push(copyArray[randomIndex]);
-    copyArray.splice(randomIndex, getRandomInt(copyArray.length, 0));
+    copyArray.splice(randomIndex, 1);
   }
   return newArr;
 }
@@ -135,7 +135,7 @@ function changePhoto(array) {
 function changeFeatures(array) {
   var string = '';
   for (i = 0; i < array.length; i++) {
-    string += '<li class="popup__feature popup__feature--' + array[i] + '></li>';
+    string += '<li class="popup__feature popup__feature--' + array[i] + '"></li>';
   }
   return string;
 }
@@ -170,13 +170,9 @@ var renderCard = function (offerElement) {
     cardsElement.querySelector('.popup__text--time').classList.add('visually-hidden');
   }
   cardsElement.querySelector('.popup__features').innerHTML = changeFeatures(getRandomArr(featuresArr));
-  console.log(changeFeatures(getRandomArr(featuresArr)));
-  // if (featuresArr === 0) {
-  //   cardsElement.querySelector('.popup__features').classList.add('visually-hidden');
-  // }
-  // else {
-  //   cardsElement.querySelector('.popup__features').innerHTML = '';
-  // }
+  if (featuresArr === 0) {
+    cardsElement.querySelector('.popup__features').classList.add('visually-hidden');
+  }
   cardsElement.querySelector('.popup__description').textContent = offerElement.offer.description;
   if (offerElement.offer.description.length === 0) {
     cardsElement.querySelector('.popup__description').classList.add('visually-hidden');
@@ -292,20 +288,22 @@ titleOfferInput.addEventListener('change', function (evt) {
 var numbGuests = document.querySelector('.ad-form__element #capacity');
 var numbRooms = document.querySelector('.ad-form__element #room_number');
 
-numbRooms.addEventListener('change', function (evt) {
+numbGuests.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value <= numbGuests.value) {
-    target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+  console.log(target.value, numbRooms.value);
+  if (target.value > numbRooms.value) {
+    target.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
   } else {
     target.setCustomValidity('');
   }
 });
 
-numbGuests.addEventListener('change', function (evt) {
+numbRooms.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value >= numbRooms.value) {
-    target.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
-  } else if (target.value === 100) {
+  console.log(target.value, numbGuests.value);
+  if (target.value < numbGuests.value) {
+    target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+  } else if (Number(target.value) === 100) {
     target.setCustomValidity('Это помещение не для гостей');
   } else {
     target.setCustomValidity('');
