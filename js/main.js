@@ -316,8 +316,9 @@ var timeOut = document.querySelector('.ad-form__element--time #timeout');
 
 timeOut.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value !== timeIn) {
-    target.setCustomValidity('Время заезда должно быть равно времени выезда');
+  console.log(target.value);
+  if (target.value !== timeIn.value) {
+    target.setCustomValidity('Время выезда должно быть равно времени заезда');
   } else {
     target.setCustomValidity('');
   }
@@ -325,7 +326,7 @@ timeOut.addEventListener('change', function (evt) {
 
 timeIn.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value !== timeOut) {
+  if (target.value !== timeOut.value) {
     target.setCustomValidity('Время заезда должно быть равно времени выезда');
   } else {
     target.setCustomValidity('');
@@ -339,7 +340,7 @@ priceOfferInput.setAttribute('max', 1000000);
 
 priceOfferInput.addEventListener('invalid', function () {
   if (priceOfferInput.validity.tooLong) {
-    priceOfferInput.setCustomValidity('Максимальная стоимость— 1000000');
+    priceOfferInput.setCustomValidity('Максимальная стоимость — 1000000');
   } else if (priceOfferInput.validity.valueMissing) {
     priceOfferInput.setCustomValidity('Обязательное поле');
   } else if (priceOfferInput.validity.pattern['A-Za-z']) {
@@ -349,7 +350,7 @@ priceOfferInput.addEventListener('invalid', function () {
 
 priceOfferInput.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value.length > MAX_PRICE) {
+  if (target.value > MAX_PRICE) {
     target.setCustomValidity('Максимальная стоимость ' + MAX_PRICE);
   } else {
     target.setCustomValidity('');
@@ -357,19 +358,17 @@ priceOfferInput.addEventListener('change', function (evt) {
 });
 
 // валидатор цена за тип жилья
+var flatPrice = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+
 var typeOffer = document.querySelector('.ad-form__element #type');
 typeOffer.addEventListener('change', function (evt) {
   var target = evt.target;
-  if (target.value === 'Бунгало') {
-    priceOfferInput.setAttribute('placeholder', 0);
-  } else if (target.value === 'Квартира') {
-    priceOfferInput.setAttribute('placeholder', 1000);
-  } else if (target.value === 'Дом') {
-    priceOfferInput.setAttribute('placeholder', 5000);
-  } else {
-    priceOfferInput.setAttribute('placeholder', 10000);
-  }
-
+  priceOfferInput.setAttribute('placeholder', flatPrice[target.value]);
 });
 
 // валидатор изображений
