@@ -1,7 +1,7 @@
 'use strict';
 
 var blockWidth = document.querySelector('.map__pins').offsetWidth;
-window.activepage.blockWidth = blockWidth;
+window.blockWidth = blockWidth;
 var blockHeight = document.querySelector('.map__pins').offsetHeight;
 
 
@@ -46,7 +46,7 @@ function activePage() {
   mapPinMain.style.left = blockWidth;
   mapPinMain.querySelector('svg ellipse').style.display = 'none';
   mapPinMain.querySelector('svg text').style.display = 'none';
-  mapPins.appendChild(window.pins.fragment);
+  mapPins.appendChild(window.fragment);
 }
 
 // активация через фокус и enter

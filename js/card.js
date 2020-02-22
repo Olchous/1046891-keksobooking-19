@@ -21,7 +21,7 @@ function translateType(type) {
 // функция создания нового src для img
 function changePhoto(array) {
   var string = '';
-  for (i = 0; i < array.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     string += '<img src=' + array[i] + ' class="popup__photo" width="45" height="40" alt="Фотография жилья" />';
   }
   return string;
@@ -29,7 +29,7 @@ function changePhoto(array) {
 
 function changeFeatures(array) {
   var string = '';
-  for (k = 0; k < array.length; k++) {
+  for (var k = 0; k < array.length; k++) {
     string += '<li class="popup__feature popup__feature--' + array[k] + '"></li>';
   }
   return string;
@@ -64,8 +64,8 @@ var renderCard = function (offerElement) {
   if (offerElement.offer.checkin.length === 0 || offerElement.offer.checkout.length === 0) {
     cardsElement.querySelector('.popup__text--time').classList.add('visually-hidden');
   }
-  cardsElement.querySelector('.popup__features').innerHTML = changeFeatures(window.data.getRandomArr(window.data.featuresArr));
-  if (window.data.featuresArr === 0) {
+  cardsElement.querySelector('.popup__features').innerHTML = changeFeatures(window.getRandomArr(window.featuresArr));
+  if (window.featuresArr === 0) {
     cardsElement.querySelector('.popup__features').classList.add('visually-hidden');
   }
   cardsElement.querySelector('.popup__description').textContent = offerElement.offer.description;
@@ -74,8 +74,8 @@ var renderCard = function (offerElement) {
   }
 
   cardsElement.querySelector('.popup__photos').innerHTML = '';
-  cardsElement.querySelector('.popup__photos').innerHTML = changePhoto(window.data.photosArr);
-  if (window.data.photosArr.length === 0) {
+  cardsElement.querySelector('.popup__photos').innerHTML = changePhoto(window.photosArr);
+  if (window.photosArr.length === 0) {
     cardsElement.querySelector('.popup__photos').classList.add('visually-hidden');
   }
   imgAvatar.setAttribute('src', offerElement.author.avatar);
@@ -98,7 +98,7 @@ var onCardEscPress = function (evt) {
   }
 };
 
-var pinsArr = window.data.createPins();
+var pinsArr = window.createPins();
 var openPopup = function (index) {
   renderCard(pinsArr[index]);
   cardPopup.classList.remove('visually-hidden');

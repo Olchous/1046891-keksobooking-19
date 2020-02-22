@@ -2,9 +2,9 @@
 var NUMBER_OBJECTS = 8;
 var typeArr = ['palace', 'flat', 'house', 'bungalo'];
 var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-window.data.featuresArr = featuresArr;
+window.featuresArr = featuresArr;
 var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-window.data.photosArr = photosArr;
+window.photosArr = photosArr;
 var checkinArr = ['12:00', '13:00', '14:00'];
 var checkoutArr = ['12:00', '13:00', '14:00'];
 var textTitle = 'Заголовок';
@@ -44,7 +44,7 @@ function createPin() {
     offer: {
       title: textTitle,
       address: {
-        x: getRandomInt(0, window.activepage.blockWidth),
+        x: getRandomInt(0, window.blockWidth),
         y: getRandomInt(130, 630)
       },
       price: getRandomInt(1000, 100000),
@@ -58,7 +58,7 @@ function createPin() {
       photos: getRandomArr(photosArr)
     },
     location: {
-      x: getRandomInt(0, window.activepage.blockWidth),
+      x: getRandomInt(0, window.blockWidth),
       y: getRandomInt(130, 630)
     }
   };
@@ -73,4 +73,4 @@ function createPins() {
   return pinsList;
 }
 
-window.data.function = createPins();
+window.function = createPins();

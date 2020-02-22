@@ -1,5 +1,5 @@
 'use strict';
-var pinsArr = window.data.createPins();
+var pinsArr = window.createPins();
 
 // поиск в разметке тега pin с классом .map__pin
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
