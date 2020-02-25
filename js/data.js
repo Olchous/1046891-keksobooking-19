@@ -4,19 +4,11 @@
   var NUMBER_OBJECTS = 8;
   var typeArr = ['palace', 'flat', 'house', 'bungalo'];
   var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  window.data = {
-    featuresArr: featuresArr
-  };
   var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  window.data = {
-    photosArr: photosArr
-  };
   var checkinArr = ['12:00', '13:00', '14:00'];
   var checkoutArr = ['12:00', '13:00', '14:00'];
   var textTitle = 'Заголовок';
   var textDescription = 'Далее следует текст описания';
-  // var blockWidth = document.querySelector('.map__pins').offsetWidth;
-
 
   // функция создания рандомной длины
   function getRandomInt(min, max) {
@@ -40,10 +32,6 @@
     }
     return newArr;
   }
-
-  window.data = {
-    getRandomArr: getRandomArr
-  };
 
   // функция создания объекта pin
   function createPin() {
@@ -82,8 +70,11 @@
     }
     return pinsList;
   }
-
   window.data = {
+    featuresArr: featuresArr,
+    photosArr: photosArr,
+    getRandomArr: getRandomArr,
     createPins: createPins
   };
+
 }());
