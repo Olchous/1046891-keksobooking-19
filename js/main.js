@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 // // переменные, используемые в коде
 // var NUMBER_OBJECTS = 8;
@@ -262,7 +262,6 @@
 // var titleOfferInput = document.querySelector('.ad-form__element #title');
 // titleOfferInput.setAttribute('min', 30);
 // titleOfferInput.setAttribute('max', 100);
-// titleOfferInput.setAttribute('required', 'required');
 
 // titleOfferInput.addEventListener('invalid', function () {
 //   if (titleOfferInput.validity.tooShort) {
@@ -289,68 +288,54 @@
 // var numbGuests = document.querySelector('.ad-form__element #capacity');
 // var numbRooms = document.querySelector('.ad-form__element #room_number');
 
-// function validationRooms() {
-//   if (numbGuests.value > numbRooms.value) {
-//     numbGuests.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
+// numbGuests.addEventListener('change', function (evt) {
+//   var target = evt.target;
+//   console.log(target.value, numbRooms.value);
+//   if (target.value > numbRooms.value) {
+//     target.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
 //   } else {
-//     numbGuests.setCustomValidity('');
+//     target.setCustomValidity('');
 //   }
-// }
-
-// function validationGuests() {
-//   if (numbRooms.value < numbGuests.value) {
-//     numbRooms.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
-//   } else if (Number(numbRooms.value) === 100) {
-//     numbRooms.setCustomValidity('Это помещение не для гостей');
-//   } else {
-//     numbRooms.setCustomValidity('');
-//   }
-// }
-
-// numbRooms.addEventListener('change', function () {
-//   validationRooms();
-//   validationGuests();
 // });
-// numbGuests.addEventListener('change', function () {
-//   validationGuests();
-//   validationRooms();
+
+// numbRooms.addEventListener('change', function (evt) {
+//   var target = evt.target;
+//   console.log(target.value, numbGuests.value);
+//   if (target.value < numbGuests.value) {
+//     target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+//   } else if (Number(target.value) === 100) {
+//     target.setCustomValidity('Это помещение не для гостей');
+//   } else {
+//     target.setCustomValidity('');
+//   }
 // });
 
 // // валидатор времени выезда и заезда
 // var timeIn = document.querySelector('.ad-form__element--time #timein');
 // var timeOut = document.querySelector('.ad-form__element--time #timeout');
 
-// function validationTimeOut() {
-//   if (timeOut.value !== timeIn.value) {
-//     timeOut.setCustomValidity('Время выезда должно быть равно времени заезда');
+// timeOut.addEventListener('change', function (evt) {
+//   var target = evt.target;
+//   if (target.value !== timeIn.value) {
+//     target.setCustomValidity('Время выезда должно быть равно времени заезда');
 //   } else {
-//     timeOut.setCustomValidity('');
+//     target.setCustomValidity('');
 //   }
-// }
-
-// function validationTimeIn() {
-//   if (timeIn.value !== timeOut.value) {
-//     timeIn.setCustomValidity('Время заезда должно быть равно времени выезда');
-//   } else {
-//     timeIn.setCustomValidity('');
-//   }
-// }
-
-// timeOut.addEventListener('change', function () {
-//   validationTimeOut();
-//   validationTimeIn();
 // });
 
-// timeIn.addEventListener('change', function () {
-//   validationTimeIn();
-//   validationTimeOut();
+// timeIn.addEventListener('change', function (evt) {
+//   var target = evt.target;
+//   if (target.value !== timeOut.value) {
+//     target.setCustomValidity('Время заезда должно быть равно времени выезда');
+//   } else {
+//     target.setCustomValidity('');
+//   }
 // });
 
 // // валидатор цена за ночь
 // // вместе с минимальным значением цены нужно изменять и плейсхолдер
 // var priceOfferInput = document.querySelector('.ad-form__element #price');
 // priceOfferInput.setAttribute('max', 1000000);
-// priceOfferInput.setAttribute('required', 'required');
 
 // priceOfferInput.addEventListener('invalid', function () {
 //   if (priceOfferInput.validity.tooLong) {
@@ -447,4 +432,3 @@
 //     closePopup();
 //   }
 // });
-
