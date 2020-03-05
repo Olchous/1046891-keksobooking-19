@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 // // переменные, используемые в коде
 // var NUMBER_OBJECTS = 8;
@@ -432,3 +432,4 @@
 //     closePopup();
 //   }
 // });
+
