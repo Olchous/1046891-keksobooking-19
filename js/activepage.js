@@ -50,6 +50,9 @@
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
     mapPins.appendChild(window.pins.pinFragment);
+
+    // mapPinMain.classList.add('.map__pin--main--active');
+    document.querySelector('.map').classList.remove('map--faded');
   }
 
   // активация через фокус и enter
