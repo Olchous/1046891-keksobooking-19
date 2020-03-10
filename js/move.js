@@ -15,6 +15,9 @@
 
     var dragged = false;
 
+    var xCoord = parseInt(pinHandler.style.left, 10);
+    var yCoord = parseInt(pinHandler.style.top, 10);
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
@@ -29,22 +32,26 @@
         y: moveEvt.clientY
       };
 
-      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+      xCoord = (xCoord - shift.x);
+      yCoord = (yCoord - shift.y);
 
-      if (startCoords.x >= window.activepage.blockWidth) {
+      if (xCoord >= window.activepage.blockWidth) {
         pinHandler.style.left = (window.activepage.blockWidth - 35) + 'px';
-      } else if (startCoords.x <= 0) {
-        pinHandler.style.left = 0 + 'px';
+      } else if (xCoord <= 0) {
+        pinHandler.style.left = (0 - 35) + 'px';
+      } else {
+        pinHandler.style.left = xCoord + 'px';
       }
-      if (startCoords.y >= 630) {
+
+      if (yCoord >= 630) {
         pinHandler.style.top = 630 + 'px';
-      } else if (startCoords.y <= 130) {
+      } else if (yCoord <= 130) {
         pinHandler.style.top = 130 + 'px';
+      } else {
+        pinHandler.style.top = yCoord + 'px';
       }
 
     };
-
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 

@@ -76,5 +76,4 @@
     getRandomArr: getRandomArr,
     createPins: createPins
   };
-
 }());
