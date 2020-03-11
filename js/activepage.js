@@ -27,8 +27,6 @@
     }
   }
 
-  disableAttribute(adForm.querySelectorAll('input'));
-  disableAttribute(adForm.querySelectorAll('select'));
   disableAttribute(adForm.querySelectorAll('fieldset'));
 
   // активация страницы
@@ -39,10 +37,9 @@
   }
 
   function activePage() {
+    document.querySelector('.map').classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
-    deleteDisable(adForm.querySelectorAll('input'));
-    deleteDisable(adForm.querySelectorAll('select'));
-    deleteDisable(adForm.querySelectorAll('fieldset'));
+    deleteDisable(adForm.querySelectorAll('fieldset :not(#address)'));
     deleteDisable(mapPinMain);
     document.querySelector('.map__filters').classList.remove('ad-form--disabled');
     mapPinMain.style.top = blockHeight;
@@ -50,11 +47,6 @@
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
     mapPins.appendChild(window.pins.pinFragment);
-    if (adForm.classList.contains('input#address')) {
-      adForm.querySelector('input#address').setAttribut('disabled', 'disabled');
-    }
-    // mapPinMain.classList.add('.map__pin--main--active');
-    document.querySelector('.map').classList.remove('map--faded');
   }
 
   // активация через фокус и enter

@@ -5,11 +5,8 @@
   var MIN_TITLE_LENGTH = 30;
   var MAX_PRICE = 1000000;
 
-  var userDialog = document.querySelector('ad-form');
+  var userDialog = document.querySelector('.ad-form');
   var main = document.querySelector('main');
-
-  // блокировка адреса
-  // document.querySelector('.ad-form__element.input #address').setAttribute('disabled', 'disabled');
 
   // валидатор заголовка
   var titleOfferInput = document.querySelector('.ad-form__element #title');
@@ -129,24 +126,23 @@
   imageOffer.setAttribute('accept', 'image/png, image/jpeg');
 
   // отправка на сервер
-  var form = userDialog.querySelector('.ad-form');
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function () {
+  userDialog.addEventListener('submit', function (evt) {
+    window.upload(new FormData(userDialog), function () {
       userDialog.classList.add('hidden-visually');
     });
     evt.preventDefault();
   });
 
-  var successHandler = function (responseData) {
+  var onSuccess = function (responseData) {
     window.data.pins = responseData;
     window.pins.renderPins(responseData);
-    var errorTemplate = document.querySelector('.success').content.querySelector('main');
-    main.appendChild(errorTemplate);
+    var successTemplate = document.querySelector('.success').content.querySelector('main');
+    main.appendChild(successTemplate);
   };
 
-  var errorHandler = function () {
+  var onError = function () {
     var errorTemplate = document.querySelector('.error__button').content.querySelector('main');
     main.appendChild(errorTemplate);
   };
-  window.load(successHandler, errorHandler);
+  window.load.load(onSuccess, onError);
 }());
