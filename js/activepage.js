@@ -50,7 +50,9 @@
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
     mapPins.appendChild(window.pins.pinFragment);
-
+    if (adForm.classList.contains('input#address')) {
+      adForm.querySelector('input#address').setAttribut('disabled', 'disabled');
+    }
     // mapPinMain.classList.add('.map__pin--main--active');
     document.querySelector('.map').classList.remove('map--faded');
   }

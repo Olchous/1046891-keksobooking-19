@@ -1,7 +1,6 @@
 'use strict';
 (function () {
-  var pinsArr = window.data.createPins();
-
+  var mapPins = document.querySelector('.map-pins');
   // поиск в разметке тега pin с классом .map__pin
   var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -20,11 +19,14 @@
   };
 
   // запись полученного нового шаблона в фрагмент
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < pinsArr.length; i++) {
-    fragment.appendChild(renderLocation(pinsArr[i], i));
+  function renderPins(pins) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(renderLocation(pins[i], i));
+    }
+    mapPins.appendChild(fragment);
   }
   window.pins = {
-    pinFragment: fragment
+    pinFragment: renderPins
   };
 }());

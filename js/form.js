@@ -6,11 +6,15 @@
   var MAX_PRICE = 1000000;
 
   var userDialog = document.querySelector('ad-form');
+  var main = document.querySelector('main');
+
+  // блокировка адреса
+  // document.querySelector('.ad-form__element.input #address').setAttribute('disabled', 'disabled');
 
   // валидатор заголовка
   var titleOfferInput = document.querySelector('.ad-form__element #title');
-  titleOfferInput.setAttribute('min', 30);
-  titleOfferInput.setAttribute('max', 100);
+  titleOfferInput.setAttribute('minlength', 30);
+  titleOfferInput.setAttribute('maxlength', 100);
 
   titleOfferInput.addEventListener('invalid', function () {
     if (titleOfferInput.validity.tooShort) {
@@ -28,10 +32,9 @@
       target.setCustomValidity('Заголовок должен состоять минимум из ' + MIN_TITLE_LENGTH + ' символов');
     } else if (target.value.length > MAX_TITLE_LENGTH) {
       target.setCustomValidity('Заголовок должен состоять максимум из ' + MAX_TITLE_LENGTH + 'символов');
+    } else {
+      target.setCustomValidity('');
     }
-    // else {
-    //   target.setCustomValidity('');
-    // }
   });
 
   // валидатор соотношение гостей и комнат
@@ -133,11 +136,12 @@
     });
     evt.preventDefault();
   });
-  var main = document.querySelector('main');
 
-  var successHandler = function () {
-    var successTemplate = document.querySelector('#success').content.querySelector('main');
-    main.appendChild(successTemplate);
+  var successHandler = function (responseData) {
+    window.data.pins = responseData;
+    window.pins.renderPins(responseData);
+    var errorTemplate = document.querySelector('.success').content.querySelector('main');
+    main.appendChild(errorTemplate);
   };
 
   var errorHandler = function () {

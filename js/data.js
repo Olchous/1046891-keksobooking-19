@@ -73,6 +73,7 @@
   window.data = {
     featuresArr: featuresArr,
     photosArr: photosArr,
+    pins: [],
     getRandomArr: getRandomArr,
     createPins: createPins
   };
