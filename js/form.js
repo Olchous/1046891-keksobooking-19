@@ -6,7 +6,6 @@
   var MAX_PRICE = 1000000;
 
   var userDialog = document.querySelector('.ad-form');
-  var main = document.querySelector('main');
 
   // валидатор заголовка
   var titleOfferInput = document.querySelector('.ad-form__element #title');
@@ -133,16 +132,4 @@
     evt.preventDefault();
   });
 
-  var onSuccess = function (responseData) {
-    window.data.pins = responseData;
-    window.pins.renderPins(responseData);
-    var successTemplate = document.querySelector('.success').content.querySelector('main');
-    main.appendChild(successTemplate);
-  };
-
-  var onError = function () {
-    var errorTemplate = document.querySelector('.error__button').content.querySelector('main');
-    main.appendChild(errorTemplate);
-  };
-  window.load.load(onSuccess, onError);
 }());

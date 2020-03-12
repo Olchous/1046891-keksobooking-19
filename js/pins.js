@@ -1,8 +1,9 @@
 'use strict';
 (function () {
-  var mapPins = document.querySelector('.map-pins');
+  var mapPins = document.querySelector('.map__pins');
   // поиск в разметке тега pin с классом .map__pin
   var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var main = document.querySelector('main');
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #pin > .map__pin
   // функция возвращает отформатированный в соответствии с нашими тредованиямии template
@@ -26,7 +27,21 @@
     }
     mapPins.appendChild(fragment);
   }
+
+  var onSuccess = function (responseData) {
+    window.data.pins = responseData;
+    window.pins.renderPins(responseData);
+    var successTemplate = document.querySelector('.success').content.querySelector('main');
+    main.appendChild(successTemplate);
+  };
+
+  var onError = function () {
+    var errorTemplate = document.querySelector('.error__button').content.querySelector('main');
+    main.appendChild(errorTemplate);
+  };
+  window.backend.load(onSuccess, onError);
+
   window.pins = {
-    pinFragment: renderPins
+    renderPins: renderPins
   };
 }());

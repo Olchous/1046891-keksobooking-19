@@ -46,7 +46,7 @@
     mapPinMain.style.left = blockWidth;
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
-    mapPins.appendChild(window.pins.pinFragment);
+    mapPins.appendChild(window.pins.renderPins);
   }
 
   // активация через фокус и enter
