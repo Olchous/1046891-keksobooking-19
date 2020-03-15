@@ -41,12 +41,14 @@
     }
     return string;
   }
+  var сardsTemplate = document.querySelector('#card');
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
   // функция возвращает отформатированный в соответствии с нашими тредованиямии template
   var renderCard = function (offerElement) {
-    var cardsElement = document.querySelector('.map__card.popup');
+    var cardsElement = сardsTemplate.cloneNode(true);
     var imgAvatar = cardsElement.querySelector('.popup__avatar');
+
     cardsElement.querySelector('.popup__title').textContent = offerElement.title;
     if (offerElement.title.length === 0) {
       cardsElement.querySelector('.popup__title').classList.add('visually-hidden');
@@ -108,8 +110,8 @@
   var pinsArr = window.backend.load(function (data) {
     window.pins.renderPins(data);
   });
-  var openPopup = function (index) {
-    renderCard(pinsArr[index]);
+  var openPopup = function () {
+    renderCard(pinsArr);
     cardPopup.classList.remove('visually-hidden');
     document.addEventListener('keydown', onCardEscPress);
   };

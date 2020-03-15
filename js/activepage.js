@@ -10,7 +10,7 @@
 
   var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
-  var mapPins = document.querySelector('.map__pins');
+  // var mapPins = document.querySelector('.map__pins');
 
   // обеспечение неактивности страницы
   // Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
@@ -39,14 +39,14 @@
   function activePage() {
     document.querySelector('.map').classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
-    deleteDisable(adForm.querySelectorAll('fieldset :not(#address)'));
+    deleteDisable(adForm.querySelectorAll('fieldset:not(#address)'));
     deleteDisable(mapPinMain);
     document.querySelector('.map__filters').classList.remove('ad-form--disabled');
     mapPinMain.style.top = blockHeight;
     mapPinMain.style.left = blockWidth;
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
-    mapPins.appendChild(window.pins.renderPins);
+    // mapPins.appendChild(window.pins.renderPins);
   }
 
   // активация через фокус и enter

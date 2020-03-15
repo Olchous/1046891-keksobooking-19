@@ -1,9 +1,10 @@
 'use strict';
 (function () {
-  var mapPins = document.querySelector('.map__pins');
+  // var mapPins = document.querySelector('.map__pins');
   // поиск в разметке тега pin с классом .map__pin
   var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var main = document.querySelector('main');
+  var pins = [];
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #pin > .map__pin
   // функция возвращает отформатированный в соответствии с нашими тредованиямии template
@@ -20,28 +21,29 @@
   };
 
   // запись полученного нового шаблона в фрагмент
-  function renderPins(pins) {
+  function renderPins(pin) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(renderLocation(pins[i], i));
+    for (var i = 0; i < pin.length; i++) {
+      fragment.appendChild(renderLocation(pin[i], i));
     }
-    mapPins.appendChild(fragment);
+    // mapPins.appendChild(fragment);
   }
 
   var onSuccess = function (responseData) {
-    window.data.pins = responseData;
-    window.pins.renderPins(responseData);
-    var successTemplate = document.querySelector('.success').content.querySelector('main');
+    pins = responseData;
+    renderPins(responseData);
+    var successTemplate = document.querySelector('#success').content.querySelector('main');
     main.appendChild(successTemplate);
   };
 
   var onError = function () {
-    var errorTemplate = document.querySelector('.error__button').content.querySelector('main');
+    var errorTemplate = document.querySelector('#error__button').content.querySelector('main');
     main.appendChild(errorTemplate);
   };
   window.backend.load(onSuccess, onError);
 
   window.pins = {
+    pins: pins,
     renderPins: renderPins
   };
 }());
