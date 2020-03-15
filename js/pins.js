@@ -32,12 +32,12 @@
   var onSuccess = function (responseData) {
     pins = responseData;
     renderPins(responseData);
-    var successTemplate = document.querySelector('#success').content.querySelector('main');
+    var successTemplate = document.querySelector('#success').content.querySelector('.success').classList.add('.visually-hidden');
     main.appendChild(successTemplate);
   };
 
   var onError = function () {
-    var errorTemplate = document.querySelector('#error__button').content.querySelector('main');
+    var errorTemplate = document.querySelector('#error__button').content.querySelector('.error');
     main.appendChild(errorTemplate);
   };
   window.backend.load(onSuccess, onError);
