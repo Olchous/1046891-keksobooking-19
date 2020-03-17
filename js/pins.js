@@ -4,7 +4,6 @@
   // поиск в разметке тега pin с классом .map__pin
   var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var main = document.querySelector('main');
-  var pins = [];
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #pin > .map__pin
   // функция возвращает отформатированный в соответствии с нашими тредованиямии template
