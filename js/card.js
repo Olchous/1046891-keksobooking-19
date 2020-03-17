@@ -41,14 +41,14 @@
     }
     return string;
   }
-  var сardsTemplate = document.querySelector('#card');
+  var cardsTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card
-  // функция возвращает отформатированный в соответствии с нашими тредованиямии template
-  var renderCard = function (offerElement) {
-    var cardsElement = сardsTemplate.cloneNode(true);
-    var imgAvatar = cardsElement.querySelector('.popup__avatar');
+  // функция возвращает отформатированный в соответствии с нашими требованиямии template
 
+  var renderCard = function (offerElement) {
+    var cardsElement = cardsTemplate.cloneNode(true);
+    var imgAvatar = cardsElement.querySelector('.popup__avatar');
     cardsElement.querySelector('.popup__title').textContent = offerElement.title;
     if (offerElement.title.length === 0) {
       cardsElement.querySelector('.popup__title').classList.add('visually-hidden');

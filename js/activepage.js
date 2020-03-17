@@ -8,7 +8,7 @@
   var blockHeight = document.querySelector('.map__pins').offsetHeight;
 
 
-  var mapCards = document.querySelector('body');
+  // var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
   // var mapPins = document.querySelector('.map__pins');
 
@@ -58,15 +58,17 @@
   });
 
   // поиск в разметке #card
-  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  // var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   // установка в placeholder адреса и активация
   adForm.querySelector('#address').setAttribute('placeholder', mapPinMain.style.left + ', ' + mapPinMain.style.top);
-  mapCards.appendChild(cardTemplate);
+  // mapCards.appendChild(cardTemplate);
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
       activePage();
     }
   });
-
+  window.activepage = {
+    activePage: activePage
+  };
 }());
