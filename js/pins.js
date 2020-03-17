@@ -30,7 +30,7 @@
   }
 
   var onSuccess = function (responseData) {
-    pins = responseData;
+    window.pins.pins = responseData;
     renderPins(responseData);
     // var successTemplate = document.querySelector('#success').content.querySelector('.success').classList.add('.visually-hidden');
     // main.appendChild(successTemplate);
@@ -42,7 +42,7 @@
   };
 
   window.pins = {
-    pins: pins,
+    pins: [],
     renderPins: renderPins,
     onSuccess: onSuccess,
     onError: onError

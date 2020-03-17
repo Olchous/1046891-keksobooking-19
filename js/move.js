@@ -4,11 +4,10 @@
   // var mainPin = document.querySelector('.map__pin');
   // console.log(mainPin);
   var onPin = document.querySelector('.map__pin--main');
-
+  var isActive = false;
   onPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    var isActive = false;
-    if (isActive) {
+    if (!isActive) {
       isActive = true;
       window.backend.load(window.pins.onSuccess, window.pins.onError);
     }
