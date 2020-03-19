@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-
+  var BLOCK_WIDTH = 1200;
   // var mainPin = document.querySelector('.map__pin');
   // console.log(mainPin);
   var onPin = document.querySelector('.map__pin--main');
@@ -34,8 +34,8 @@
       xCoord = (xCoord - shift.x);
       yCoord = (yCoord - shift.y);
 
-      if (xCoord >= window.activepage.blockWidth) {
-        onPin.style.left = (window.activepage.blockWidth - 35) + 'px';
+      if (xCoord >= BLOCK_WIDTH) {
+        onPin.style.left = (BLOCK_WIDTH - 35) + 'px';
       } else if (xCoord <= 0) {
         onPin.style.left = (0 - 35) + 'px';
       } else {

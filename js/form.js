@@ -8,7 +8,8 @@
   var userDialog = document.querySelector('.ad-form');
 
   // валидатор заголовка
-  var titleOfferInput = document.querySelector('.ad-form__element #title').setAttribute('required', 'required');
+  var titleOfferInput = document.querySelector('.ad-form__element #title');
+  titleOfferInput.setAttribute('required', 'required');
   titleOfferInput.setAttribute('minlength', MIN_TITLE_LENGTH);
   titleOfferInput.setAttribute('maxlength', MAX_TITLE_LENGTH);
 
@@ -126,7 +127,9 @@
 
   // отправка на сервер
   userDialog.addEventListener('submit', function (evt) {
-    window.backend.sent(new FormData(userDialog), function () {
+    var form = new FormData(userDialog);
+    form.set('address', document.querySelector('.ad-form #address').value);
+    window.backend.sent(form, function () {
       userDialog.classList.add('hidden-visually');
     });
     evt.preventDefault();

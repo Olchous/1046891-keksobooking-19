@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var blockWidth = document.querySelector('.map__pins').offsetWidth;
   var blockHeight = document.querySelector('.map__pins').offsetHeight;
+  var BLOCK_WIDTH = 1200;
 
   // var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
@@ -43,7 +43,7 @@
     adForm.classList.remove('ad-form--disabled');
     document.querySelector('.map__filters').classList.remove('ad-form--disabled');
     mapPinMain.style.top = blockHeight;
-    mapPinMain.style.left = blockWidth;
+    mapPinMain.style.left = BLOCK_WIDTH;
     deleteDisable();
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
@@ -80,7 +80,6 @@
   window.activepage = {
     activePage: activePage,
     adForm: adForm,
-    blockWidth: blockWidth
   };
 
   // FormData.set('address',document.querySelector('.ad-form #address').value)
