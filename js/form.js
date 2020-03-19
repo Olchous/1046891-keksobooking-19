@@ -8,9 +8,9 @@
   var userDialog = document.querySelector('.ad-form');
 
   // валидатор заголовка
-  var titleOfferInput = document.querySelector('.ad-form__element #title');
-  titleOfferInput.setAttribute('minlength', 30);
-  titleOfferInput.setAttribute('maxlength', 100);
+  var titleOfferInput = document.querySelector('.ad-form__element #title').setAttribute('required', 'required');
+  titleOfferInput.setAttribute('minlength', MIN_TITLE_LENGTH);
+  titleOfferInput.setAttribute('maxlength', MAX_TITLE_LENGTH);
 
   titleOfferInput.addEventListener('invalid', function () {
     if (titleOfferInput.validity.tooShort) {
@@ -126,7 +126,7 @@
 
   // отправка на сервер
   userDialog.addEventListener('submit', function (evt) {
-    window.upload(new FormData(userDialog), function () {
+    window.backend.sent(new FormData(userDialog), function () {
       userDialog.classList.add('hidden-visually');
     });
     evt.preventDefault();

@@ -2,11 +2,7 @@
 
 (function () {
   var blockWidth = document.querySelector('.map__pins').offsetWidth;
-  window.activepage = {
-    blockWidth: blockWidth
-  };
   var blockHeight = document.querySelector('.map__pins').offsetHeight;
-
 
   // var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
@@ -15,6 +11,7 @@
   // обеспечение неактивности страницы
   // Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
   var adForm = document.querySelector('.ad-form');
+
   adForm.classList.add('ad-form--disabled');
   var formFieldset = Array.prototype.slice.call(adForm.querySelectorAll('fieldset')).filter(function (item) {
     if (item.querySelector('#address')) {
@@ -66,7 +63,7 @@
 
   // установка в placeholder адреса и активация
   var isActive = false;
-  adForm.querySelector('#address').setAttribute('placeholder', parseInt(mapPinMain.style.left, 10) + ', ' + parseInt(mapPinMain.style.top, 10));
+  adForm.querySelector('#address').setAttribute('value', parseInt(mapPinMain.style.left, 10) + ', ' + parseInt(mapPinMain.style.top, 10));
   // mapCards.appendChild(cardTemplate);
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
@@ -82,7 +79,10 @@
 
   window.activepage = {
     activePage: activePage,
-    adForm: adForm
+    adForm: adForm,
+    blockWidth: blockWidth
   };
+
+  // FormData.set('address',document.querySelector('.ad-form #address').value)
 
 }());
