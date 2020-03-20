@@ -1,8 +1,6 @@
 'use strict';
 (function () {
   var BLOCK_WIDTH = 1200;
-  // var mainPin = document.querySelector('.map__pin');
-  // console.log(mainPin);
   var onPin = document.querySelector('.map__pin--main');
   var movePin = function (evt) {
     evt.preventDefault();

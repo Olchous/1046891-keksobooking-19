@@ -130,7 +130,7 @@
     var form = new FormData(userDialog);
     form.set('address', document.querySelector('.ad-form #address').value);
     window.backend.sent(form, function () {
-      userDialog.classList.add('hidden-visually');
+      userDialog.classList.add('ad-form--disabled');
     });
     evt.preventDefault();
   });

@@ -28,17 +28,22 @@
     mapPins.appendChild(fragment);
   }
 
+  var modalSuccess = document.querySelector('#success').content.querySelector('.success');
+  main.appendChild(modalSuccess);
+  modalSuccess.classList.add('visually-hidden');
+
   var onSuccess = function (responseData) {
     window.pins.pins = responseData;
     renderPins(responseData);
-    // var successTemplate = document.querySelector('#success').content.querySelector('.success').classList.add('.visually-hidden');
-    // main.appendChild(successTemplate);
+    modalSuccess.classList.remove('visually-hidden');
   };
 
   var onError = function () {
-    var errorTemplate = document.querySelector('#error__button').content.querySelector('.error');
+    var errorTemplate = document.querySelector('.error__button').content.querySelector('.error');
     main.appendChild(errorTemplate);
   };
+
+
 
   window.pins = {
     pins: [],
