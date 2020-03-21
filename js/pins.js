@@ -32,15 +32,20 @@
   main.appendChild(modalSuccess);
   document.querySelector('.success').classList.add('visually-hidden');
 
+  var modalError = document.querySelector('#error').content.querySelector('.error');
+  main.appendChild(modalError);
+  document.querySelector('.error').classList.add('visually-hidden');
+
   var onSuccess = function (responseData) {
     window.pins.pins = responseData;
     renderPins(responseData);
   };
 
   var onError = function () {
-    var errorTemplate = document.querySelector('.error__button').content.querySelector('.error');
-    main.appendChild(errorTemplate);
-  };
+    document.querySelector('button').content.querySelector('.error__button');
+    modalError;
+  }
+
 
   window.pins = {
     pins: [],
