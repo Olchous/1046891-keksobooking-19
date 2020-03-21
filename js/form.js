@@ -129,9 +129,11 @@
   userDialog.addEventListener('submit', function (evt) {
     var form = new FormData(userDialog);
     form.set('address', document.querySelector('.ad-form #address').value);
-    window.backend.sent(form, function () {
+    window.backend.send(form, function () {
       userDialog.classList.add('ad-form--disabled');
       document.querySelector('.success').classList.remove('visually-hidden');
+    }, function () {
+      document.querySelector('.error').classList.remove('visually-hidden');
     });
     evt.preventDefault();
   });

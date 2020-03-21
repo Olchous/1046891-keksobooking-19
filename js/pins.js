@@ -32,9 +32,12 @@
   main.appendChild(modalSuccess);
   document.querySelector('.success').classList.add('visually-hidden');
 
-  var modalError = document.querySelector('#error').content.querySelector('.error');
+  var modalErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+  main.appendChild(modalErrorTemplate);
+
+  var modalError = document.querySelector('.error');
   main.appendChild(modalError);
-  document.querySelector('.error').classList.add('visually-hidden');
+  modalError.classList.add('visually-hidden');
 
   var onSuccess = function (responseData) {
     window.pins.pins = responseData;
@@ -43,9 +46,26 @@
 
   var onError = function () {
     document.querySelector('button').content.querySelector('.error__button');
-    modalError;
-  }
+    modalError.classList.remove('.visually-hidden');
+  };
 
+  window.addEventListener('keydown', function (evt) {
+    if (evt.keyCode == 27) {
+      document.querySelector('.success').classList.add('visually-hidden');
+      window.activepage.adForm.reset();
+    }
+  });
+  window.addEventListener('click', function (evt) {
+    if (evt) {
+      document.querySelector('.success').classList.add('visually-hidden');
+    }
+  });
+
+  document.querySelector('.error__button').addEventListener('click', function (evt) {
+    if (evt) {
+      document.querySelector('.error').classList.add('visually-hidden');
+    }
+  });
 
   window.pins = {
     pins: [],
