@@ -5,10 +5,13 @@
   var MIN_TITLE_LENGTH = 30;
   var MAX_PRICE = 1000000;
 
+  var userDialog = document.querySelector('.ad-form');
+
   // валидатор заголовка
   var titleOfferInput = document.querySelector('.ad-form__element #title');
-  titleOfferInput.setAttribute('min', 30);
-  titleOfferInput.setAttribute('max', 100);
+  titleOfferInput.setAttribute('required', 'required');
+  titleOfferInput.setAttribute('minlength', MIN_TITLE_LENGTH);
+  titleOfferInput.setAttribute('maxlength', MAX_TITLE_LENGTH);
 
   titleOfferInput.addEventListener('invalid', function () {
     if (titleOfferInput.validity.tooShort) {
@@ -32,8 +35,8 @@
   });
 
   // валидатор соотношение гостей и комнат
-  var numbGuests = document.querySelector('.ad-form__element #capacity');
-  var numbRooms = document.querySelector('.ad-form__element #room_number');
+  var numbGuests = userDialog.querySelector('.ad-form__element #capacity');
+  var numbRooms = userDialog.querySelector('.ad-form__element #room_number');
 
   numbGuests.addEventListener('change', function (evt) {
     var target = evt.target;
@@ -56,8 +59,8 @@
   });
 
   // валидатор времени выезда и заезда
-  var timeIn = document.querySelector('.ad-form__element--time #timein');
-  var timeOut = document.querySelector('.ad-form__element--time #timeout');
+  var timeIn = userDialog.querySelector('.ad-form__element--time #timein');
+  var timeOut = userDialog.querySelector('.ad-form__element--time #timeout');
 
   timeOut.addEventListener('change', function (evt) {
     var target = evt.target;
@@ -79,7 +82,7 @@
 
   // валидатор цена за ночь
   // вместе с минимальным значением цены нужно изменять и плейсхолдер
-  var priceOfferInput = document.querySelector('.ad-form__element #price');
+  var priceOfferInput = userDialog.querySelector('.ad-form__element #price');
   priceOfferInput.setAttribute('max', 1000000);
 
   priceOfferInput.addEventListener('invalid', function () {
@@ -109,17 +112,28 @@
     'palace': 10000
   };
 
-  var typeOffer = document.querySelector('.ad-form__element #type');
+  var typeOffer = userDialog.querySelector('.ad-form__element #type');
   typeOffer.addEventListener('change', function (evt) {
     var target = evt.target;
     priceOfferInput.setAttribute('placeholder', flatPrice[target.value]);
   });
 
   // валидатор изображений
-  var photoOffer = document.querySelector('.ad-form #avatar');
+  var photoOffer = userDialog.querySelector('.ad-form #avatar');
   photoOffer.setAttribute('accept', 'image/png, image/jpeg');
 
-  var imageOffer = document.querySelector('.ad-form__element #images');
+  var imageOffer = userDialog.querySelector('.ad-form__element #images');
   imageOffer.setAttribute('accept', 'image/png, image/jpeg');
+
+  // отправка на сервер
+  userDialog.addEventListener('submit', function (evt) {
+    var form = new FormData(userDialog);
+    form.set('address', document.querySelector('.ad-form #address').value);
+    window.backend.sent(form, function () {
+      userDialog.classList.add('ad-form--disabled');
+      document.querySelector('.success').classList.remove('visually-hidden');
+    });
+    evt.preventDefault();
+  });
 
 }());

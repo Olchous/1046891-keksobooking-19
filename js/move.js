@@ -1,11 +1,8 @@
 'use strict';
 (function () {
-
-  // var mainPin = document.querySelector('.map__pin');
-  // console.log(mainPin);
-  var pinHandler = document.querySelector('.map__pin--main');
-
-  pinHandler.addEventListener('mousedown', function (evt) {
+  var BLOCK_WIDTH = 1200;
+  var onPin = document.querySelector('.map__pin--main');
+  var movePin = function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -14,6 +11,9 @@
     };
 
     var dragged = false;
+
+    var xCoord = parseInt(onPin.style.left, 10);
+    var yCoord = parseInt(onPin.style.top, 10);
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -29,22 +29,26 @@
         y: moveEvt.clientY
       };
 
-      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+      xCoord = (xCoord - shift.x);
+      yCoord = (yCoord - shift.y);
 
-      if (startCoords.x >= window.activepage.blockWidth) {
-        pinHandler.style.left = (window.activepage.blockWidth - 35) + 'px';
-      } else if (startCoords.x <= 0) {
-        pinHandler.style.left = 0 + 'px';
-      }
-      if (startCoords.y >= 630) {
-        pinHandler.style.top = 630 + 'px';
-      } else if (startCoords.y <= 130) {
-        pinHandler.style.top = 130 + 'px';
+      if (xCoord >= BLOCK_WIDTH) {
+        onPin.style.left = (BLOCK_WIDTH - 35) + 'px';
+      } else if (xCoord <= 0) {
+        onPin.style.left = (0 - 35) + 'px';
+      } else {
+        onPin.style.left = xCoord + 'px';
       }
 
+      if (yCoord >= 630) {
+        onPin.style.top = 630 + 'px';
+      } else if (yCoord <= 130) {
+        onPin.style.top = 130 + 'px';
+      } else {
+        onPin.style.top = yCoord + 'px';
+      }
+      window.activepage.adForm.querySelector('#address').setAttribute('value', parseInt(onPin.style.left, 10) + ', ' + parseInt(onPin.style.top, 10));
     };
-
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
@@ -54,16 +58,19 @@
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
           clickEvt.preventDefault();
-          pinHandler.removeEventListener('click', onClickPreventDefault);
+          onPin.removeEventListener('click', onClickPreventDefault);
         };
-        pinHandler.addEventListener('click', onClickPreventDefault);
+        onPin.addEventListener('click', onClickPreventDefault);
       }
 
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  });
+  };
 
+  window.move = {
+    movePin: movePin
+  };
 
 })();
