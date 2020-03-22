@@ -3,7 +3,7 @@
 (function () {
   var blockHeight = document.querySelector('.map__pins').offsetHeight;
   var BLOCK_WIDTH = 1200;
-
+  var isActive = false;
   // var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
   // var mapPins = document.querySelector('.map__pins');
@@ -59,7 +59,6 @@
     mapPinMain.style.left = BLOCK_WIDTH;
     mapPinMain.querySelector('svg ellipse').style.display = 'block';
     mapPinMain.querySelector('svg text').style.display = 'block';
-    isActive = false;
     var pinDelete = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinDelete.length; i++) {
       pinDelete[i].remove();
