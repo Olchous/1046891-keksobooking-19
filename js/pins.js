@@ -22,7 +22,8 @@
   // запись полученного нового шаблона в фрагмент
   function renderPins(pin) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pin.length; i++) {
+    var count = pin.length > 5 ? 5 : pin.length;
+    for (var i = 0; i < count; i++) {
       fragment.appendChild(renderLocation(pin[i], i));
     }
     mapPins.appendChild(fragment);
