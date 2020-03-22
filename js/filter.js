@@ -5,12 +5,6 @@
     if (type === 'any') {
       return true;
     }
-
-    // if (pinType === type) {
-    //  return true;
-    // } else {
-    //  return false;
-    // }
     return pinType === type;
 
   };

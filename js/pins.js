@@ -51,7 +51,7 @@
   };
 
   window.addEventListener('keydown', function (evt) {
-    if (evt.keyCode == 27) {
+    if (evt.keyCode === 27) {
       document.querySelector('.success').classList.add('visually-hidden');
     }
   });

@@ -50,12 +50,12 @@
     mapPinMain.querySelector('svg text').style.display = 'none';
   }
 
-  var removePins = function() {
+  var removePins = function () {
     var pinDelete = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinDelete.length; i++) {
       pinDelete[i].remove();
     }
-  }
+  };
 
   // функция дезактивации страницы
   var disabledPage = function () {
@@ -77,8 +77,7 @@
     }
   });
 
-  // установка в placeholder адреса и активация
-  var isActive = false;
+  // установка в placeholder адреса и активации
   adForm.querySelector('#address').setAttribute('value', parseInt(mapPinMain.style.left, 10) + ', ' + parseInt(mapPinMain.style.top, 10));
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
