@@ -59,7 +59,8 @@
     mapPinMain.style.left = BLOCK_WIDTH;
     mapPinMain.querySelector('svg ellipse').style.display = 'block';
     mapPinMain.querySelector('svg text').style.display = 'block';
-    var pinDelete = document.querySelectorAll(':not(.map__pins--main).map__pin');
+    isActive = false;
+    var pinDelete = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinDelete.length; i++) {
       pinDelete[i].remove();
     }
@@ -91,7 +92,7 @@
   window.activepage = {
     activePage: activePage,
     adForm: adForm,
-    disabledPage: disabledPage
+    disabledPage: disabledPage,
   };
 
 }());
