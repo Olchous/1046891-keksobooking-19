@@ -131,6 +131,9 @@
     form.set('address', document.querySelector('.ad-form #address').value);
     window.backend.send(form, function () {
       userDialog.classList.add('ad-form--disabled');
+      window.activepage.adForm.reset();
+      window.activepage.disabledPage();
+
       document.querySelector('.success').classList.remove('visually-hidden');
     }, function () {
       document.querySelector('.error').classList.remove('visually-hidden');

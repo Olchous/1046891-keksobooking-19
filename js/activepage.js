@@ -50,6 +50,21 @@
     mapPinMain.querySelector('svg text').style.display = 'none';
   }
 
+  // функция дезактивации страницы
+  var disabledPage = function () {
+    document.querySelector('.map').classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    document.querySelector('.map__filters').classList.add('ad-form--disabled');
+    mapPinMain.style.top = blockHeight;
+    mapPinMain.style.left = BLOCK_WIDTH;
+    mapPinMain.querySelector('svg ellipse').style.display = 'block';
+    mapPinMain.querySelector('svg text').style.display = 'block';
+    var pinDelete = document.querySelectorAll(':not(.map__pins--main).map__pin');
+    for (var i = 0; i < pinDelete.length; i++) {
+      pinDelete[i].remove();
+    }
+  };
+
   // активация через фокус и enter
   var mapPinMain = document.querySelector('.map__pin--main');
   mapPinMain.addEventListener('keydown', function (evt) {
@@ -76,6 +91,7 @@
   window.activepage = {
     activePage: activePage,
     adForm: adForm,
+    disabledPage: disabledPage
   };
 
 }());
