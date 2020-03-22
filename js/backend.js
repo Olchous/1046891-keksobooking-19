@@ -32,7 +32,7 @@
       xhr.open('GET', URL_LOAD);
       xhr.send();
     },
-    sent: function (data, onSuccess, onError) {
+    send: function (data, onSuccess, onError) {
       var xhr = new XMLHttpRequest();
       makeRequest(onSuccess, onError, xhr);
       xhr.open('POST', URL_UPLOAD);
