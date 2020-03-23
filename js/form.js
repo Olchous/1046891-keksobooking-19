@@ -131,8 +131,8 @@
   var typeOffer = userDialog.querySelector('.ad-form__element #type');
   typeOffer.addEventListener('change', function (evt) {
     var target = evt.target;
-    priceOfferInput.setAttribute('placeholder', FlatPrice[target.value]);
-    priceOfferInput.setAttribute('min', FlatPrice[target.value]);
+    priceOfferInput.setAttribute('placeholder', FlatPrice[target.value.toUpperCase()]);
+    priceOfferInput.setAttribute('min', FlatPrice[target.value.toUpperCase()]);
   });
 
   // валидатор изображений

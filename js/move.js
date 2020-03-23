@@ -4,8 +4,8 @@
   var BLOCK_MAX_HIGHT = 630;
   var BLOCK_MIN_HIGHT = 130;
 
-  var MAINPIN_WIDTH = 62;
-  var MAINPIN_HEIGHT = 62;
+  var MAINPIN_WIDTH = 65;
+  var MAINPIN_HEIGHT = 65;
   var MAINPIN_TRAINGLE_HEIGHT = 22;
 
   var onPin = document.querySelector('.map__pin--main');
@@ -39,23 +39,24 @@
       xCoord = (xCoord - shift.x);
       yCoord = (yCoord - shift.y);
 
-      if (xCoord + MAINPIN_WIDTH / 2 >= BLOCK_WIDTH) {
-        onPin.style.left = (1200 - MAINPIN_WIDTH / 2) + 'px';
-      } else if (xCoord + MAINPIN_WIDTH / 2 <= 0) {
-        onPin.style.left = (0 - MAINPIN_WIDTH / 2) + 'px';
+      if (xCoord >= BLOCK_WIDTH) {
+        onPin.style.left = 1200 + 'px';
+      } else if (xCoord <= 0) {
+        onPin.style.left = 0 + 'px';
       } else {
         onPin.style.left = xCoord + 'px';
       }
 
-      if (yCoord + MAINPIN_HEIGHT + MAINPIN_TRAINGLE_HEIGHT >= BLOCK_MAX_HIGHT) {
-        onPin.style.top = (BLOCK_MAX_HIGHT - MAINPIN_HEIGHT - MAINPIN_TRAINGLE_HEIGHT) + 'px';
-      } else if (yCoord + MAINPIN_HEIGHT + MAINPIN_TRAINGLE_HEIGHT <= BLOCK_MIN_HIGHT) {
-        onPin.style.top = (BLOCK_MIN_HIGHT - MAINPIN_HEIGHT - MAINPIN_TRAINGLE_HEIGHT) + 'px';
+      if (yCoord >= BLOCK_MAX_HIGHT) {
+        onPin.style.top = BLOCK_MAX_HIGHT + 'px';
+      } else if (yCoord <= BLOCK_MIN_HIGHT) {
+        onPin.style.top = BLOCK_MIN_HIGHT + 'px';
       } else {
         onPin.style.top = yCoord + 'px';
       }
+
       window.activepage.adForm.querySelector('#address')
-        .setAttribute('value', parseInt(onPin.style.left, 10) + (MAINPIN_WIDTH / 2) + ', ' +
+        .setAttribute('value', Math.floor(parseInt(onPin.style.left, 10) + (MAINPIN_WIDTH / 2)) + ', ' +
           (parseInt(onPin.style.top, 10) + MAINPIN_TRAINGLE_HEIGHT + MAINPIN_HEIGHT));
     };
     var onMouseUp = function (upEvt) {

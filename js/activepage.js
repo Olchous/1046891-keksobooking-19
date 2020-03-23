@@ -83,9 +83,8 @@
         window.activepage.isActive = true;
         window.backend.load(window.pins.onSuccess, window.pins.onError);
         activePage();
-      } else {
-        window.move.movePin(evt);
       }
+      window.move.movePin(evt);
     }
   });
 
