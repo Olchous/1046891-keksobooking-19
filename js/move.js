@@ -3,9 +3,11 @@
   var BLOCK_WIDTH = 1200;
   var BLOCK_MAX_HIGHT = 630;
   var BLOCK_MIN_HIGHT = 130;
-  var PX_MAX = 35;
-  var pinXOffset = 65 / 2;
-  var pinYOffset = 65 + 22;
+
+  var MAINPIN_WIDTH = 62;
+  var MAINPIN_HEIGHT = 62;
+  var MAINPIN_TRAINGLE_HEIGHT = 22;
+
   var onPin = document.querySelector('.map__pin--main');
   var movePin = function (evt) {
     evt.preventDefault();
@@ -20,13 +22,6 @@
     var xCoord = parseInt(onPin.style.left, 10);
     var yCoord = parseInt(onPin.style.top, 10);
 
-
-    var getXCoord = function () {
-      return Math.round(xCoord + pinXOffset);
-    }
-    var getYCoord = function () {
-      return Math.round(xCoord + pinYOffset);
-    }
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
@@ -44,22 +39,24 @@
       xCoord = (xCoord - shift.x);
       yCoord = (yCoord - shift.y);
 
-      if (getXCoord(xCoord) >= BLOCK_WIDTH) {
-        onPin.style.left = (BLOCK_WIDTH - PX_MAX) + 'px';
-      } else if (getXCoord(xCoord) <= 0) {
-        onPin.style.left = PX_MAX + 'px';
+      if (xCoord + MAINPIN_WIDTH / 2 >= BLOCK_WIDTH) {
+        onPin.style.left = (1200 - MAINPIN_WIDTH / 2) + 'px';
+      } else if (xCoord + MAINPIN_WIDTH / 2 <= 0) {
+        onPin.style.left = (0 - MAINPIN_WIDTH / 2) + 'px';
       } else {
-        onPin.style.left = getXCoord(xCoord) + 'px';
+        onPin.style.left = xCoord + 'px';
       }
 
-      if (getYCoord(yCoord) >= BLOCK_MAX_HIGHT) {
-        onPin.style.top = (BLOCK_MAX_HIGHT - PX_MAX) + 'px';
-      } else if (getYCoord(yCoord) <= BLOCK_MIN_HIGHT) {
-        onPin.style.top = (BLOCK_MIN_HIGHT) + 'px';
+      if (yCoord + MAINPIN_HEIGHT + MAINPIN_TRAINGLE_HEIGHT >= BLOCK_MAX_HIGHT) {
+        onPin.style.top = (BLOCK_MAX_HIGHT - MAINPIN_HEIGHT - MAINPIN_TRAINGLE_HEIGHT) + 'px';
+      } else if (yCoord + MAINPIN_HEIGHT + MAINPIN_TRAINGLE_HEIGHT <= BLOCK_MIN_HIGHT) {
+        onPin.style.top = (BLOCK_MIN_HIGHT - MAINPIN_HEIGHT - MAINPIN_TRAINGLE_HEIGHT) + 'px';
       } else {
-        onPin.style.top = getYCoord(yCoord) + 'px';
+        onPin.style.top = yCoord + 'px';
       }
-      window.activepage.adForm.querySelector('#address').setAttribute('value', parseInt(onPin.style.left, 10) + ', ' + parseInt(onPin.style.top, 10));
+      window.activepage.adForm.querySelector('#address')
+        .setAttribute('value', parseInt(onPin.style.left, 10) + (MAINPIN_WIDTH / 2) + ', ' +
+          (parseInt(onPin.style.top, 10) + MAINPIN_TRAINGLE_HEIGHT + MAINPIN_HEIGHT));
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
