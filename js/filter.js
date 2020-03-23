@@ -1,5 +1,11 @@
 'use strict';
 (function () {
+  var LOW_PRICE = 10000;
+  var HIGH_PRICE = 50000;
+  var houseType = document.querySelector('#housing-type');
+  var housePrice = document.querySelector('#housing-price');
+  var houseRooms = document.querySelector('#housing-rooms');
+  var houseGuests = document.querySelector('#housing-guests');
 
   var filterTypeHouse = function (type, pinType) {
     if (type === 'any') {
@@ -12,11 +18,11 @@
     if (price === 'any') {
       return true;
     } else if (price === 'middle') {
-      return pinPrice > 10000 && pinPrice < 50000;
+      return pinPrice > LOW_PRICE && pinPrice < HIGH_PRICE;
     } else if (price === 'low') {
-      return pinPrice < 10000;
+      return pinPrice < LOW_PRICE;
     } else if (price === 'high') {
-      return pinPrice > 50000;
+      return pinPrice > HIGH_PRICE;
     }
     return pinPrice === price;
   };
@@ -49,20 +55,14 @@
         activeValue.push(checkboxElements[i].value);
       }
     }
-
     return activeValue;
   };
   document.querySelector('.map__filters').addEventListener('change', window.debounce(function () {
-    var houseType = document.querySelector('#housing-type').value;
-    var housePrice = document.querySelector('#housing-price').value;
-    var houseRooms = document.querySelector('#housing-rooms').value;
-    var houseGuests = document.querySelector('#housing-guests').value;
-
     var pins = filterPins({
-      houseType: houseType,
-      housePrice: housePrice,
-      houseRooms: houseRooms,
-      houseGuests: houseGuests,
+      houseType: houseType.value,
+      housePrice: housePrice.value,
+      houseRooms: houseRooms.value,
+      houseGuests: houseGuests.value,
       features: getActiveFeatures()
     }, window.pins.pins);
 
@@ -73,6 +73,9 @@
   var filterPins = function (params, pins) {
     var pinsFiltered = [];
     for (var i = 0; i < pins.length; i++) {
+      if (pinsFiltered.length === 5) {
+        break;
+      }
       var isValid = filterTypeHouse(params.houseType, pins[i].offer.type) &&
        filterPrice(params.housePrice, pins[i].offer.price) &&
         filterRooms(params.houseRooms, pins[i].offer.rooms) &&

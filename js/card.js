@@ -1,46 +1,43 @@
 'use strict';
 
 (function () {
-  var ESC_KEY = 'Escape';
-  var ENTER_KEY = 'Enter';
+  var ESC_KEY = 27;
+  var ENTER_KEY = 17;
 
   window.card = {
+    ENTER_KEYCODE: ENTER_KEY,
     ESC_KEYCODE: ESC_KEY
   };
 
-  window.card = {
-    ENTER_KEYCODE: ENTER_KEY
-  };
-
   // функция присвоения русскоязычного значения type
-  function translateType(type) {
+  var translateType = function (type) {
     if (type === 'flat') {
       return 'Квартира';
     } else if (type === 'bungalo') {
       return 'Бунгало';
     } else if (type === 'house') {
       return 'Дом';
-    } else {
-      return 'Дворец';
     }
-  }
+    return 'Дворец';
+  };
 
   // функция создания нового src для img
-  function changePhoto(array) {
+  var changePhoto = function (array) {
     var string = '';
     for (var i = 0; i < array.length; i++) {
       string += '<img src="' + array[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья" />';
     }
     return string;
-  }
+  };
 
-  function changeFeatures(array) {
+  var changeFeatures = function (array) {
     var string = '';
     for (var k = 0; k < array.length; k++) {
       string += '<li class="popup__feature popup__feature--' + array[k] + '"></li>';
     }
     return string;
-  }
+  };
+
   var cardsTemplate = document.querySelector('#card').content.querySelector('.map__card').cloneNode(true);
 
   // функция передачи информации из созданного objects в скопированный узел template DOM > #card > .map__card

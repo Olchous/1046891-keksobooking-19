@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  var blockHeight = document.querySelector('.map__pins').offsetHeight;
+  var BLOCK_HEIGHT = document.querySelector('.map__pins').offsetHeight;
   var BLOCK_WIDTH = 1200;
-  var isActive = false;
+  var LEFT_MOUSE_BUTTON = 0;
   // var mapCards = document.querySelector('body');
   // создание переменной, дублирующей содержание класса .map__pins
   // var mapPins = document.querySelector('.map__pins');
@@ -14,41 +14,38 @@
 
   adForm.classList.add('ad-form--disabled');
   var formFieldset = Array.prototype.slice.call(adForm.querySelectorAll('fieldset')).filter(function (item) {
-    if (item.querySelector('#address')) {
-      return false;
-    }
-    return true;
+    return !item.querySelector('#address');
   });
 
   // Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
   document.querySelector('.map__filters').classList.add('ad-form--disabled');
 
   // Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled
-  function disableAttribute(array) {
+  var disableAttribute = function (array) {
     for (var k = 0; k < array.length; k++) {
       array[k].setAttribute('disabled', 'disabled');
     }
-  }
+  };
 
   disableAttribute(adForm.querySelectorAll('fieldset'));
 
   // активация страницы
-  function deleteDisable() {
+  var deleteDisable = function () {
     for (var k = 0; k < formFieldset.length; k++) {
       formFieldset[k].removeAttribute('disabled');
     }
-  }
+  };
 
-  function activePage() {
+  var activePage = function () {
     document.querySelector('.map').classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     document.querySelector('.map__filters').classList.remove('ad-form--disabled');
-    mapPinMain.style.top = blockHeight;
+    mapPinMain.style.top = BLOCK_HEIGHT;
     mapPinMain.style.left = BLOCK_WIDTH;
     deleteDisable();
     mapPinMain.querySelector('svg ellipse').style.display = 'none';
     mapPinMain.querySelector('svg text').style.display = 'none';
-  }
+  };
 
   var removePins = function () {
     var pinDelete = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -62,8 +59,9 @@
     document.querySelector('.map').classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     document.querySelector('.map__filters').classList.add('ad-form--disabled');
-    mapPinMain.style.top = blockHeight;
+    mapPinMain.style.top = BLOCK_HEIGHT;
     mapPinMain.style.left = BLOCK_WIDTH;
+    disableAttribute(adForm.querySelectorAll('fieldset'));
     mapPinMain.querySelector('svg ellipse').style.display = 'block';
     mapPinMain.querySelector('svg text').style.display = 'block';
     removePins();
@@ -80,9 +78,9 @@
   // установка в placeholder адреса и активации
   adForm.querySelector('#address').setAttribute('value', parseInt(mapPinMain.style.left, 10) + ', ' + parseInt(mapPinMain.style.top, 10));
   mapPinMain.addEventListener('mousedown', function (evt) {
-    if (evt.button === 0) {
-      if (!isActive) {
-        isActive = true;
+    if (evt.button === LEFT_MOUSE_BUTTON) {
+      if (!window.activepage.isActive) {
+        window.activepage.isActive = true;
         window.backend.load(window.pins.onSuccess, window.pins.onError);
         activePage();
       } else {
@@ -92,7 +90,7 @@
   });
 
   window.activepage = {
-    activePage: activePage,
+    isActive: false,
     adForm: adForm,
     disabledPage: disabledPage,
     removePins: removePins

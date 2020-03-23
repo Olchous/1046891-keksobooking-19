@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var MAX_COUNT_PINS = 5;
   var mapPins = document.querySelector('.map__pins');
   // поиск в разметке тега pin с классом .map__pin
   var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -22,7 +23,7 @@
   // запись полученного нового шаблона в фрагмент
   function renderPins(pin) {
     var fragment = document.createDocumentFragment();
-    var count = pin.length > 5 ? 5 : pin.length;
+    var count = pin.length > MAX_COUNT_PINS ? MAX_COUNT_PINS : pin.length;
     for (var i = 0; i < count; i++) {
       fragment.appendChild(renderLocation(pin[i], i));
     }
@@ -49,25 +50,25 @@
     document.querySelector('button').content.querySelector('.error__button');
     modalError.classList.remove('.visually-hidden');
   };
-
-  window.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
+  var closeModal = function (evt) {
+    if (evt.keyCode === window.card.ESC_KEYCODE) {
       document.querySelector('.success').classList.add('visually-hidden');
-    }
-  });
-  window.addEventListener('click', function (evt) {
-    if (evt) {
-      document.querySelector('.success').classList.add('visually-hidden');
-    }
-  });
-
-  document.querySelector('.error__button').addEventListener('click', function (evt) {
-    if (evt) {
       document.querySelector('.error').classList.add('visually-hidden');
+
+      window.removeEventListener('keydown', closeModal);
     }
+  };
+
+  document.querySelector('.success').addEventListener('click', function () {
+    document.querySelector('.success').classList.add('visually-hidden');
+  });
+
+  document.querySelector('.error').addEventListener('click', function () {
+    document.querySelector('.error').classList.add('visually-hidden');
   });
 
   window.pins = {
+    closeModal: closeModal,
     pins: [],
     renderPins: renderPins,
     onSuccess: onSuccess,

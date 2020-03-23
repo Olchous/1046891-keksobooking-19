@@ -1,6 +1,11 @@
 'use strict';
 (function () {
   var BLOCK_WIDTH = 1200;
+  var BLOCK_MAX_HIGHT = 630;
+  var BLOCK_MIN_HIGHT = 130;
+  var PX_MAX = 35;
+  var pinXOffset = 65 / 2;
+  var pinYOffset = 65 + 22;
   var onPin = document.querySelector('.map__pin--main');
   var movePin = function (evt) {
     evt.preventDefault();
@@ -15,6 +20,13 @@
     var xCoord = parseInt(onPin.style.left, 10);
     var yCoord = parseInt(onPin.style.top, 10);
 
+
+    var getXCoord = function () {
+      return Math.round(xCoord + pinXOffset);
+    }
+    var getYCoord = function () {
+      return Math.round(xCoord + pinYOffset);
+    }
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
@@ -32,20 +44,20 @@
       xCoord = (xCoord - shift.x);
       yCoord = (yCoord - shift.y);
 
-      if (xCoord >= BLOCK_WIDTH) {
-        onPin.style.left = (BLOCK_WIDTH - 35) + 'px';
-      } else if (xCoord <= 0) {
-        onPin.style.left = (0 - 35) + 'px';
+      if (getXCoord(xCoord) >= BLOCK_WIDTH) {
+        onPin.style.left = (BLOCK_WIDTH - PX_MAX) + 'px';
+      } else if (getXCoord(xCoord) <= 0) {
+        onPin.style.left = PX_MAX + 'px';
       } else {
-        onPin.style.left = xCoord + 'px';
+        onPin.style.left = getXCoord(xCoord) + 'px';
       }
 
-      if (yCoord >= 630) {
-        onPin.style.top = 630 + 'px';
-      } else if (yCoord <= 130) {
-        onPin.style.top = 130 + 'px';
+      if (getYCoord(yCoord) >= BLOCK_MAX_HIGHT) {
+        onPin.style.top = (BLOCK_MAX_HIGHT - PX_MAX) + 'px';
+      } else if (getYCoord(yCoord) <= BLOCK_MIN_HIGHT) {
+        onPin.style.top = (BLOCK_MIN_HIGHT) + 'px';
       } else {
-        onPin.style.top = yCoord + 'px';
+        onPin.style.top = getYCoord(yCoord) + 'px';
       }
       window.activepage.adForm.querySelector('#address').setAttribute('value', parseInt(onPin.style.left, 10) + ', ' + parseInt(onPin.style.top, 10));
     };
@@ -62,7 +74,6 @@
         };
         onPin.addEventListener('click', onClickPreventDefault);
       }
-
     };
 
     document.addEventListener('mousemove', onMouseMove);

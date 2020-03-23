@@ -38,60 +38,74 @@
   var numbGuests = userDialog.querySelector('.ad-form__element #capacity');
   var numbRooms = userDialog.querySelector('.ad-form__element #room_number');
 
-  numbGuests.addEventListener('change', function (evt) {
-    var target = evt.target;
-    if (target.value > numbRooms.value) {
-      target.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
+  var validationGuest = function () {
+    if (numbGuests.value > numbRooms.value) {
+      numbGuests.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
     } else {
-      target.setCustomValidity('');
+      numbGuests.setCustomValidity('');
     }
+  };
+
+  var validationRooms = function () {
+    if (numbRooms.value < numbGuests.value) {
+      numbRooms.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
+    } else if (Number(numbRooms.value) === 100) {
+      numbRooms.setCustomValidity('Это помещение не для гостей');
+    } else {
+      numbRooms.setCustomValidity('');
+    }
+  };
+
+  numbGuests.addEventListener('change', function () {
+    validationGuest();
+    validationRooms();
   });
 
-  numbRooms.addEventListener('change', function (evt) {
-    var target = evt.target;
-    if (target.value < numbGuests.value) {
-      target.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
-    } else if (Number(target.value) === 100) {
-      target.setCustomValidity('Это помещение не для гостей');
-    } else {
-      target.setCustomValidity('');
-    }
+  numbRooms.addEventListener('change', function () {
+    validationGuest();
+    validationRooms();
   });
 
   // валидатор времени выезда и заезда
-  var timeIn = userDialog.querySelector('.ad-form__element--time #timein');
-  var timeOut = userDialog.querySelector('.ad-form__element--time #timeout');
+  var timeIn = document.querySelector('#timein');
+  var timeOut = document.querySelector('#timeout');
 
-  timeOut.addEventListener('change', function (evt) {
-    var target = evt.target;
-    if (target.value !== timeIn.value) {
-      target.setCustomValidity('Время выезда должно быть равно времени заезда');
+  var validationTimeIn = function () {
+    if (timeIn.value !== timeOut.value) {
+      timeIn.setCustomValidity('Время заезда должно быть равно времени выезда');
     } else {
-      target.setCustomValidity('');
+      timeIn.setCustomValidity('');
     }
+  };
+
+  var validationTimeOut = function () {
+    if (timeOut.value !== timeIn.value) {
+      timeOut.setCustomValidity('Время выезда должно быть равно времени заезда');
+    } else {
+      timeOut.setCustomValidity('');
+    }
+  };
+
+  timeOut.addEventListener('change', function () {
+    validationTimeIn();
+    validationTimeOut();
   });
 
-  timeIn.addEventListener('change', function (evt) {
-    var target = evt.target;
-    if (target.value !== timeOut.value) {
-      target.setCustomValidity('Время заезда должно быть равно времени выезда');
-    } else {
-      target.setCustomValidity('');
-    }
+  timeIn.addEventListener('change', function () {
+    validationTimeIn();
+    validationTimeOut();
   });
 
   // валидатор цена за ночь
   // вместе с минимальным значением цены нужно изменять и плейсхолдер
   var priceOfferInput = userDialog.querySelector('.ad-form__element #price');
-  priceOfferInput.setAttribute('max', 1000000);
+  priceOfferInput.setAttribute('max', MAX_PRICE);
 
   priceOfferInput.addEventListener('invalid', function () {
     if (priceOfferInput.validity.tooLong) {
       priceOfferInput.setCustomValidity('Максимальная стоимость — 1000000');
     } else if (priceOfferInput.validity.valueMissing) {
       priceOfferInput.setCustomValidity('Обязательное поле');
-    } else if (priceOfferInput.validity.pattern['A-Za-z']) {
-      priceOfferInput.setCustomValidity('Числовое поле');
     }
   });
 
@@ -105,7 +119,7 @@
   });
 
   // валидатор цена за тип жилья
-  var flatPrice = {
+  var FlatPrice = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
@@ -115,7 +129,7 @@
   var typeOffer = userDialog.querySelector('.ad-form__element #type');
   typeOffer.addEventListener('change', function (evt) {
     var target = evt.target;
-    priceOfferInput.setAttribute('placeholder', flatPrice[target.value]);
+    priceOfferInput.setAttribute('placeholder', FlatPrice[target.value]);
   });
 
   // валидатор изображений
@@ -133,12 +147,15 @@
       userDialog.classList.add('ad-form--disabled');
       window.activepage.adForm.reset();
       window.activepage.disabledPage();
-
+      window.activepage.isActive = false;
       document.querySelector('.success').classList.remove('visually-hidden');
+      window.addEventListener('keydown', window.pins.closeModal);
     }, function () {
       document.querySelector('.error').classList.remove('visually-hidden');
+      window.addEventListener('keydown', window.pins.closeModal);
     });
     evt.preventDefault();
+
   });
 
 }());
