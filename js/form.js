@@ -39,7 +39,9 @@
   var numbRooms = userDialog.querySelector('.ad-form__element #room_number');
 
   var validationGuest = function () {
-    if (numbGuests.value > numbRooms.value) {
+    if (numbGuests.value === 0 && numbRooms.value !== 100) {
+      numbGuests.setCustomValidity('.error');
+    } else if (numbGuests.value > numbRooms.value) {
       numbGuests.setCustomValidity('Количесво гостей должно быть меньше или равно количеству комнат');
     } else {
       numbGuests.setCustomValidity('');
@@ -47,10 +49,10 @@
   };
 
   var validationRooms = function () {
-    if (numbRooms.value < numbGuests.value) {
-      numbRooms.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
-    } else if (Number(numbRooms.value) === 100) {
+    if (Number(numbRooms.value) === 100 && Number(numbGuests.value) !== 0) {
       numbRooms.setCustomValidity('Это помещение не для гостей');
+    } else if (numbRooms.value < numbGuests.value) {
+      numbRooms.setCustomValidity('Количесво комнат должно быть больше или равно количеству гостей');
     } else {
       numbRooms.setCustomValidity('');
     }
@@ -120,16 +122,17 @@
 
   // валидатор цена за тип жилья
   var FlatPrice = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
   };
 
   var typeOffer = userDialog.querySelector('.ad-form__element #type');
   typeOffer.addEventListener('change', function (evt) {
     var target = evt.target;
     priceOfferInput.setAttribute('placeholder', FlatPrice[target.value]);
+    priceOfferInput.setAttribute('min', FlatPrice[target.value]);
   });
 
   // валидатор изображений
